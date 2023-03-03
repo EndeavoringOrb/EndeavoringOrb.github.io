@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>SCAI</h1>
+      <nav>
+        <ul>
+          <li><a href="#about">About SCAI</a></li>
+          <li><a href="#how_work">How It Works</a></li>
+          <li><a href="#code_links">Files</a></li>
+          <li><a href="index.html">Back to Main Page</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="about">
+        <h2>About SCAI</h2>
+        <p>SCAI (Screenshot AI) is a project that seeks to build neural networks to play complex games based solely off the pixel values of the screen.</p>
+      </section>
+      <section id="how_work">
+        <h2>How It Works</h2>
+          <p>Right now I am working with Overwatch 2, once the model is functional to a satisfactory degree the plan is to extend to other games.</p>
+          <p>The core of the program is using reinforcement learning to train the model.</p>
+          <p>The reinforcement learning uses two neural networks to get the rewards from an action.</p>
+          <p>It takes an encoded representation of a screenshot of the game as input.</p>
+          <iframe src="diagram1.html" width="870px" height="280px"></iframe>
+      </section>
+      <section id="code_links">
+        <h2>Files</h2>
+          <ul>
+            <li><a href="https://github.com/EndeavoringOrb/SCAI/blob/main/autoencoders/autoencoder_E0.h5">Image Encoder</a></li>
+            <li><a href="https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_models/dmg_model35.h5">Damage Sensor Model</a></li>
+            <li><a href="https://github.com/EndeavoringOrb/SCAI/blob/main/health_models/health_model105.h5">Health Sensor Model</a></li>
+          </ul>
+      </section>
+    </main>
+    <footer>
+      <p>Copyright &copy; 2023 EndeavoringOrb. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

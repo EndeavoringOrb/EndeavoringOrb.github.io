@@ -175,10 +175,10 @@ kramdown:
 
 # Collections
 collections:
-  teaching:
+  simple_physics_sim:
     output: true
     permalink: /:collection/:path/
-  publications:
+  scai:
     output: true
     permalink: /:collection/:path/
   portfolio:
