@@ -1,10 +1,10 @@
 # main links links
 main:
-  - title: "Publications"
-    url: /publications/
+  - title: "SCAI"
+    url: /scai/
 
-  - title: "Talks"
-    url: /talks/    
+  - title: "Physics Sim"
+    url: /simple_physics_sim/    
 
   - title: "Teaching"
     url: /teaching/    
