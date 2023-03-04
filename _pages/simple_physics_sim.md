@@ -13,7 +13,6 @@ How it Works
 ------
 The program spawns in balls that can collide with each other.  
 It detects collision using Pythagorean theorem, and uses basic physics principles to handle what happens when a collision is detected.
-{% include phsyics_diagram.html %}
 
 What's next?
 ------
