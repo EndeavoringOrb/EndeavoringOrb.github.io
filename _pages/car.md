@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Car"
-permalink: /car_racing_model/
+permalink: /RL_car/
 author_profile: true
 ---
 
