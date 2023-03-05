@@ -15,7 +15,9 @@ The car has 8 lines that extend outwards from it that measure distance to the ne
 The track that it is driving on is actually just a numpy array of values, where white is 1 and black is 0. It uses a function to find the nearest black item in the numpy array in a certain direction, which gives it the distance to the wall.  
 
 The image below is a racetrack I created. The black is a wall, the white is the track, and the purple dots are the reward dots. The two green dots are the front of the car, the two blue dots are the back of the car. The red dots are the sensors, they mark the wall in a certain direction with respect to the car.  
+
 ![Image of a racetrack.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/racetrack.png?raw=true)  
+
 If you want to play around with it a bit, then go to the link at the bottom of this page labeled "Racing Track for Humans". If you run that python file you will be able to race on that racetrack. In order to do that you need to have config2.npy, image2.npy and image2.png in order to get that specific racetrack, otherwise you have to create your own with the racetrack creator.  
 
 Racetrack Creator
