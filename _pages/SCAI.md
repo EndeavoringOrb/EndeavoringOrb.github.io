@@ -27,7 +27,7 @@ This is what the game looks like.
 The health is shown in the bottom left corner.  
 The crosshair is in the center of the screen.  
 
-Overwatch 2 is a First Person Shooter game, basically the goal is to shoot other people before they shoot you. It's a little bit more complicated than that because there are different types of characters, and different gamemodes like capture the point, or escorting a truck through an area.
+Overwatch 2 is a First Person Shooter game, basically the goal is to shoot other people before they shoot you. It's a little bit more complicated than that because there are different types of characters, and different gamemodes like capture the point, or escorting a truck through an area, but those will be worked on after the model is good at combat.
 
 Sensing Damage
 ------
@@ -36,9 +36,9 @@ the kill symbol,
 ![An image of the kill symbol which is a red skull.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/kill_shot.png?raw=true)  
 the headshot symbol,  
 ![An image of the headshot symbol which is 4 diagonal red lines going outwards, centered at the crosshair.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/headshot_plain.png?raw=true)  
-the bodyshot symbol,  
+and the bodyshot symbol.  
 ![An image of the bodyshot symbol which is the same as the headshot symbol except the lines are slightly shorter and they are white instead of red.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/body_shot.png?raw=true)  
-and if there is no symbol around the crosshair, then that means you missed.  
+If there is no symbol around the crosshair, then that means you missed.  
 ![An image of just the crosshair because if you miss there is no symbol.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/miss.png?raw=true)  
 They symbols can also be mixed together, so if you get a kill when you headshot someone, then it combines the two symbols, and same for a bodyshot + kill. The image below is a body shot + kill.  
 ![An image showing a bodyshot plus a kill, which is a red skull with the white diagonal lines of a body shot.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/bodyshot_kill.png?raw=true)  

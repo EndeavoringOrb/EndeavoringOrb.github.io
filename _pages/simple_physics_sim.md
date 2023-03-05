@@ -19,6 +19,10 @@ What's next?
 Optimize collision detection. Right now each ball is checked with every other ball which is very inefficient. I would like to change it so it only checks balls near to it.   
 My plan is to use a grid to divide the screen into squares then only check against balls in the adjacent squares.
 
+Maybe also look into checking the collisions in a certain order, like from bottom of the screen up to make it so you don't need to decrease the gravity speed in order for it to be accurate. Right now if you set the gravity sub-steps too low, then the balls overlap, but if you set sub-steps higher then the simulation doesn't run in real time.
+
+Add a real-time viscosity slider, I think that would be an interesting challenge.
+
 GitHub Links
 ------
 [Image Encoder](https://github.com/EndeavoringOrb/SCAI/blob/main/autoencoders/autoencoder_E0.h5)  
