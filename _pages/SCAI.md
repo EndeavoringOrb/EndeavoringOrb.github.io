@@ -25,7 +25,9 @@ General Info About Game
 This is what the game looks like.  
 ![Image of Overwatch 2](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/fullscreen_training_room2.png?raw=true)  
 The health is shown in the bottom left corner.  
-The crosshair is always in the center of the screen.  
+The crosshair is in the center of the screen.  
+
+Overwatch 2 is a First Person Shooter game, basically the goal is to shoot other people before they shoot you. It's a little bit more complicated than that because there are different types of characters, and different gamemodes like capture the point, or escorting a truck through an area.
 
 Sensing Damage
 ------
@@ -43,7 +45,7 @@ They symbols can also be mixed together, so if you get a kill when you headshot 
 
 Sensing Health
 ------
-SCAI senses damage using another neural network. Health is always displayed in the bottom left corner of the screen. The neural network looks at one number at a time to classify them, and I run the neural network on each of the spots where health numbers could occur. It then concatenate the numbers together to get the actual health.  
+SCAI senses damage using another neural network. Health is always displayed in the bottom left corner of the screen. The neural network looks at one number at a time to classify them, and I run the neural network on each of the spots where health numbers could occur. It then concatenates the numbers together to get the actual health.  
 The health image that is captured looks like this.  
 ![An image showing what the health looks like.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/health_full.png?raw=true)  
 It is split up into 3 sections, then each of those sections are processed independently.  
@@ -57,11 +59,11 @@ Image Encoder
 My attempts at using an autoencoder to encode the image just ended in low pixel versions of the image, which I could fall back on if nothing else works, but I would prefer to get an encoding that can be decoded to a higher resolution.  
 The next thing I tried was extracting important features from the image before putting the images through the autoencoder. In Overwatch 2, all enemies have a red outline, so if we filter for a certain range of red then we can filter out everything except for the enemies outlines. This in principle should make it easier for the autoencoder to encode the images because there is less "noise" in the image.  
 The problem with that approach is that because so much of the image is just black, the decoder decodes the encoded representation of the image to a fully black image every time. Because there is so much black in the input image, and only thin outlines of red, it can get the loss very low by decoding to a fully black image every time.
-  
+
 The next thing I am going to try is randomizing the background color of the input image. I think it should make it better if the background color is randomized, because then the autoencoder can't predict the background color and will focus on predicting the outlines which would be the only non-randomized part of the image.
 
 GitHub Links
 ------
-[Image Encoder](https://github.com/EndeavoringOrb/SCAI/blob/main/autoencoders/autoencoder_E0.h5)  
-[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_models/dmg_model35.h5)  
-[Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_models/health_model105.h5)
+[Image Encoder Model](https://github.com/EndeavoringOrb/SCAI/blob/main/autoencoders/autoencoder_E0.h5) (Not final version)  
+[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_models/dmg_model35.h5) (97.38% accuracy)  
+[Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_models/health_model105.h5) (99.16% accuracy)  
