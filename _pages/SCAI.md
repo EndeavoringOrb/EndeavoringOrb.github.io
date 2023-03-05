@@ -23,7 +23,7 @@ Below is a diagram outlining the process of training the model.
 General Info About Game
 ------
 This is what the game looks like.  
-![Image of Overwatch 2](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/fullscreen_training_room.png?raw=true)  
+![Image of Overwatch 2](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/fullscreen_training_room2.png?raw=true)  
 The health is shown in the bottom left corner.  
 The crosshair is always in the center of the screen.  
 
@@ -45,7 +45,7 @@ Sensing Health
 ------
 SCAI senses damage using another neural network. Health is always displayed in the bottom left corner of the screen. The neural network looks at one number at a time to classify them, and I run the neural network on each of the spots where health numbers could occur. It then concatenate the numbers together to get the actual health.  
 The health image that is captured looks like this.  
-![An image showing what the health looks like.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/health_full.png?raw=true)  
+![An image showing what the health looks like.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/health_full.png?raw=true)  
 It is split up into 3 sections, then each of those sections are processed independently.  
 
 What's Next?
