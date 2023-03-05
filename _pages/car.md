@@ -53,5 +53,5 @@ GitHub Links
 [Racetrack Creator](https://github.com/EndeavoringOrb/RL_car/blob/main/make_racecourse.py)  
 [Racetrack for Humans](https://github.com/EndeavoringOrb/RL_car/blob/main/car_racing.py)  
 [Racetrack for Robots](https://github.com/EndeavoringOrb/RL_car/blob/main/car_racing_test.py)  
-[Current Best Model](https://github.com/EndeavoringOrb/RL_car/blob/main/ppo_model6/94208.zip)
+[Current Best Model](https://github.com/EndeavoringOrb/RL_car/blob/main/ppo_model6/94208.zip)  
 [Train a model](https://github.com/EndeavoringOrb/RL_car/blob/main/SB3train.py)
