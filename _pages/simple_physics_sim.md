@@ -25,6 +25,5 @@ Add a real-time viscosity slider, I think that would be an interesting challenge
 
 GitHub Links
 ------
-[Image Encoder](https://github.com/EndeavoringOrb/SCAI/blob/main/autoencoders/autoencoder_E0.h5)  
-[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_models/dmg_model35.h5)  
-[Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_models/health_model105.h5)
+[Main Code](https://raw.githubusercontent.com/EndeavoringOrb/simple_physics/master/balls.cpp)  
+[Github Repo](https://github.com/EndeavoringOrb/simple_physics)  
