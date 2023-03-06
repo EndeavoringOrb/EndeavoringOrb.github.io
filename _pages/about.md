@@ -33,6 +33,8 @@ Technology Stack
 ## Tools
 - [Tensorflow]()
   - CNNs  
+  - LSTMs
+  - Transformers
 - [Mediapipe](link)  
 - [Pytorch]()  
 - [Weights & Biases]()  
@@ -41,4 +43,3 @@ Technology Stack
 ## Languages
 - Python  
 - C++  
-## Models
