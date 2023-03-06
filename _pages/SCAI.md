@@ -1,24 +1,24 @@
 ---
 layout: archive
-title: "SCAI"
+title: "Screenshot AI (SCAi)"
 permalink: /scai/
 author_profile: true
 ---
 
 Overview
 ======
-SCAI (Screenshot AI) is a project that seeks to build neural networks to play complex games based solely off the pixel values of the screen.  
+Screenshot AI (SCAi) is a project that seeks to build neural networks to play complex games based solely off the pixel values of the screen.  
 Concepts Used:  
 - Image Recognition  
 - Autoencoder
 - Reinforcement Learning
 
-How SCAI Works
+How SCAi Works
 -----
 Right now I am working with the game Overwatch 2, once the model is functional to a satisfactory degree the plan is to extend to other games.
 The core of the program is using reinforcement learning to train the model.
 Below is a diagram outlining the process of training the model.
-{% include SCAI_diagram.html %}
+{% include SCAi_diagram.html %}
 
 General Info About Game
 -----
@@ -31,7 +31,7 @@ Overwatch 2 is a First Person Shooter game, basically the goal is to shoot other
 
 Sensing Damage
 -----
-SCAI senses damage using a neural network. In Overwatch 2, you have two immediate cues to know when you have done damage. One is an audio cue which is harder to sense using a computer. The second cue is a symbol surrounding your crosshair in the middle of the screen. Depending on what type of shot you hit, the symbol will change. There are 3 main symbols,  
+SCAi senses damage using a neural network. In Overwatch 2, you have two immediate cues to know when you have done damage. One is an audio cue which is harder to sense using a computer. The second cue is a symbol surrounding your crosshair in the middle of the screen. Depending on what type of shot you hit, the symbol will change. There are 3 main symbols,  
 the kill symbol,  
 ![An image of the kill symbol which is a red skull.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/kill_shot.png?raw=true)  
 the headshot symbol,  
@@ -45,7 +45,7 @@ They symbols can also be mixed together, so if you get a kill when you headshot 
 
 Sensing Health
 -----
-SCAI senses damage using another neural network. Health is always displayed in the bottom left corner of the screen. The neural network looks at one number at a time to classify them, and I run the neural network on each of the spots where health numbers could occur. It then concatenates the numbers together to get the actual health.  
+SCAi senses damage using another neural network. Health is always displayed in the bottom left corner of the screen. The neural network looks at one number at a time to classify them, and I run the neural network on each of the spots where health numbers could occur. It then concatenates the numbers together to get the actual health.  
 The health image that is captured looks like this.  
 ![An image showing what the health looks like.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/health_full.png?raw=true)  
 It is split up into 3 sections, then each of those sections are processed independently.  
@@ -64,6 +64,6 @@ The next thing I am going to try is randomizing the background color of the inpu
 
 GitHub Links
 -----
-[Image Encoder Model](https://github.com/EndeavoringOrb/SCAI/blob/main/autoencoders/autoencoder_E0.h5) (Not final version)  
-[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_models/dmg_model35.h5) (97.38% accuracy)  
-[Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_models/health_model105.h5) (99.16% accuracy)  
+[Image Encoder Model](https://github.com/EndeavoringOrb/SCAi/blob/main/autoencoders/autoencoder_E0.h5) (Not final version)  
+[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAi/blob/main/dmg_models/dmg_model35.h5) (97.38% accuracy)  
+[Health Sensor Model](https://github.com/EndeavoringOrb/SCAi/blob/main/health_models/health_model105.h5) (99.16% accuracy)  
