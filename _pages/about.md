@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Welcome to my website, featuring my coding projects. Here, you can explore my projects in various programming languages and frameworks. The projects spread across a wide range of subjects from machine learning to physics sims. Browse through my projects and discover the stories and processes behind each one :). Thank you for visiting, and I look forward to sharing my coding journey with you!  
+Welcome to my website, featuring my coding projects. Here, you can explore my projects in various programming languages and frameworks. You can click on the links at the top of the page to look at specific projects. Thank you for visiting! 
 
 GitHub Project Links
 -----
@@ -30,16 +30,16 @@ GitHub Project Links
 
 Technology Stack
 -----
-## Tools
-- [Tensorflow]()
+### Tools
+- [Tensorflow](https://www.tensorflow.org/)
   - CNNs  
   - LSTMs
   - Transformers
-- [Mediapipe](link)  
-- [Pytorch]()  
-- [Weights & Biases]()  
-- [MicroPython]()  
-  - ESP32, ESP8266
-## Languages
+- [Mediapipe](https://mediapipe.dev/)  
+- [Pytorch](https://pytorch.org/get-started/locally/)  
+- [Weights & Biases](https://wandb.ai/site)  
+- [MicroPython](https://micropython.org/)  
+  - ESP32, ESP8266  
+### Languages
 - Python  
 - C++  
