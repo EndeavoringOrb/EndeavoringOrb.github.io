@@ -8,10 +8,14 @@ author_profile: true
 Overview
 ======
 Screenshot AI (SCAi) is a project that seeks to build neural networks to play complex games based solely off the pixel values of the screen.  
+
 Concepts Used:  
 - Image Recognition  
+  - CNNs  
 - Autoencoder
 - Reinforcement Learning
+  - Stable Baselines 3
+    - PPO algorithm
 
 How SCAi Works
 -----
@@ -57,7 +61,9 @@ Right now the model is ready to run, the only problem is that my computer is not
 Image Encoder
 -----
 My attempts at using an autoencoder to encode the image just ended in low pixel versions of the image, which I could fall back on if nothing else works, but I would prefer to get an encoding that can be decoded to a higher resolution.  
+
 The next thing I tried was extracting important features from the image before putting the images through the autoencoder. In Overwatch 2, all enemies have a red outline, so if we filter for a certain range of red then we can filter out everything except for the enemies outlines. This in principle should make it easier for the autoencoder to encode the images because there is less "noise" in the image.  
+
 The problem with that approach is that because so much of the image is just black, the decoder decodes the encoded representation of the image to a fully black image every time. Because there is so much black in the input image, and only thin outlines of red, it can get the loss very low by decoding to a fully black image every time.
 
 The next thing I am going to try is randomizing the background color of the input image. I think it should make it better if the background color is randomized, because then the autoencoder can't predict the background color and will focus on predicting the outlines which would be the only non-randomized part of the image.

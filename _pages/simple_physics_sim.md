@@ -25,5 +25,4 @@ Add a real-time viscosity slider, I think that would be an interesting challenge
 
 GitHub Links
 ------
-[Main Code](https://raw.githubusercontent.com/EndeavoringOrb/simple_physics/master/balls.cpp)  
-[Github Repo](https://github.com/EndeavoringOrb/simple_physics)  
+[CPP File](https://raw.githubusercontent.com/EndeavoringOrb/simple_physics/master/balls.cpp)  
