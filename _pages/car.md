@@ -25,7 +25,7 @@ Racetrack Creator
 When you start this program a 1000x1000 window will pop up.  
 - To draw a track you left-click and drag.  
 - To add the reward points, move your mouse to where you want the point then press space.  
-- To add the starting point, press "s" on the keyboard ONCE.  
+- To add the car's starting point, press "s" on the keyboard ONCE.  
 - To save the racetrack, press "s" again.  
 
 Racetrack for Robots
