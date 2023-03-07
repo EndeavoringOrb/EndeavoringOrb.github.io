@@ -174,19 +174,19 @@ kramdown:
 
 
 # Collections
-collections:
-  simple_physics_sim:
-    output: true
-    permalink: /:collection/:path/
-  scai:
-    output: true
-    permalink: /:collection/:path/
-  portfolio:
-    output: true
-    permalink: /:collection/:path/
-  talks:
-    output: true
-    permalink: /:collection/:path/
+#collections:
+#  simple_physics_sim:
+#    output: true
+#    permalink: /:collection/:path/
+#  scai:
+#   output: true
+#    permalink: /:collection/:path/
+#  portfolio:
+#    output: true
+#    permalink: /:collection/:path/
+#  talks:
+#    output: true
+#    permalink: /:collection/:path/
 
 
 # Defaults
