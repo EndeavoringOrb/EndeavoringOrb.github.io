@@ -66,10 +66,11 @@ The next thing I tried was extracting important features from the image before p
 
 The problem with that approach is that because so much of the image is just black, the decoder decodes the encoded representation of the image to a fully black image every time. Because there is so much black in the input image, and only thin outlines of red, it can get the loss very low by decoding to a fully black image every time.
 
-The next thing I am going to try is randomizing the background color of the input image. I think it should make it better if the background color is randomized, because then the autoencoder can't predict the background color and will focus on predicting the outlines which would be the only non-randomized part of the image.
+The next thing I am going to try is randomizing the background color of the input image. I think it might be easier for the model if the background color is randomized, because then the autoencoder can't predict the background color and will focus on predicting the outlines which would be the only non-randomized part of the image.
+
+If that doesn't work I will try to change the loss function so it only takes into account the pixels that are not empty in the original image.
 
 GitHub Links
 -----
-[Image Encoder Model](https://github.com/EndeavoringOrb/SCAi/blob/main/autoencoders/autoencoder_E0.h5) (Not final version)  
-[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAi/blob/main/dmg_models/dmg_model35.h5) (97.38% accuracy)  
-[Health Sensor Model](https://github.com/EndeavoringOrb/SCAi/blob/main/health_models/health_model105.h5) (99.16% accuracy)  
+[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_model.h5) (97.38% accuracy)  
+[Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_model.h5) (99.16% accuracy)  

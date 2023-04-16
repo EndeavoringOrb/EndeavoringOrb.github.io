@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Aaron Belikoff"
-  avatar           : "profile.png"
+  avatar           : "files/face_picture.jpg"
   bio              : "Aaron Belikoff is a junior in highschool attending Futures Academy. He enjoys coding things to demonstrate concepts he learns; they usually have to do with ML, statistics or physics."
   location         : "Oakland, CA"
   employer         :
