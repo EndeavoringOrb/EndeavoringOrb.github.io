@@ -1,4 +1,4 @@
-# main links links
+# main links
 main:
   - title: "Screenshot Ai"
     url: /scai/
@@ -6,5 +6,8 @@ main:
   - title: "Physics Engine"
     url: /simple_physics_sim/    
 
-  - title: "Reinforcement Learning Car"
+  - title: "Reinforcement Learning -  Car"
     url: /RL_car/
+
+  - title: "Reinforcement Learning - Warrior"
+    url: /RL_warrior/
