@@ -72,5 +72,5 @@ If that doesn't work I will try to change the loss function so it only takes int
 
 GitHub Links
 -----
-[Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_model.h5) (97.38% accuracy)  
-[Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_model.h5) (99.16% accuracy)  
+ - [Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_model.h5) (97.38% accuracy)  
+ - [Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_model.h5) (99.16% accuracy)  

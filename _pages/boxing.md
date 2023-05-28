@@ -46,4 +46,4 @@ Adding an Actor-Critic network architecture so I can have the network output con
 
 GitHub Links
 -----
-[Github Repository](https://github.com/EndeavoringOrb/warrior)
+ - [Github Repository](https://github.com/EndeavoringOrb/warrior)
