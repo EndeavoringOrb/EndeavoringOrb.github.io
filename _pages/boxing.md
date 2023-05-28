@@ -46,8 +46,4 @@ Adding an Actor-Critic network architecture so I can have the network output con
 
 GitHub Links
 -----
-[Racetrack Creator](https://github.com/EndeavoringOrb/RL_car/blob/main/make_racecourse.py)
-[Racetrack for Humans](https://github.com/EndeavoringOrb/RL_car/blob/main/car_racing.py)
-[Racetrack for Robots](https://github.com/EndeavoringOrb/RL_car/blob/main/car_racing_test.py)
-[Current Best Model](https://github.com/EndeavoringOrb/RL_car/blob/main/model.h5)
-[Train a model](https://github.com/EndeavoringOrb/RL_car/blob/main/custom_network.py)
+[Github Repository](https://github.com/EndeavoringOrb/warrior)
