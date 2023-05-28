@@ -3,11 +3,11 @@ main:
   - title: "Screenshot Ai"
     url: /scai/
 
-  - title: "Physics Engine"
-    url: /simple_physics_sim/    
+  - title: "Reinforcement Learning - Warrior"
+    url: /RL_warrior/
 
   - title: "Reinforcement Learning -  Car"
     url: /RL_car/
 
-  - title: "Reinforcement Learning - Warrior"
-    url: /RL_warrior/
+  - title: "Physics Engine"
+    url: /simple_physics_sim/    
