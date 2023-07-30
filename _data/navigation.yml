@@ -1,5 +1,8 @@
 # main links
 main:
+  - title: "The Game"
+    url: /the_game/
+
   - title: "Screenshot Ai"
     url: /scai/
 
