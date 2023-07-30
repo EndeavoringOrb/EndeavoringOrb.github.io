@@ -42,3 +42,5 @@ Technology Stack
 ### Languages
 - Python  
 - C++  
+- C#
+- Javascript
