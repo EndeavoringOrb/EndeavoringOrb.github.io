@@ -30,12 +30,11 @@ GitHub Project Links
 Technology Stack
 -----
 ### Tools
-- [Tensorflow](https://www.tensorflow.org/)
+- [Tensorflow](https://www.tensorflow.org/) & [Pytorch](https://pytorch.org/get-started/locally/)
   - CNNs  
   - LSTMs
   - Transformers
-- [Mediapipe](https://mediapipe.dev/)  
-- [Pytorch](https://pytorch.org/get-started/locally/)  
+- [Mediapipe](https://mediapipe.dev/)
 - [Weights & Biases](https://wandb.ai/site)  
 - [MicroPython](https://micropython.org/)  
   - ESP32, ESP8266  
