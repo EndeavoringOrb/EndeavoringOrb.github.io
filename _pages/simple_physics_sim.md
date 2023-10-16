@@ -21,8 +21,6 @@ My plan is to use a grid to divide the screen into squares then only check again
 
 Maybe also look into checking the collisions in a certain order, like from bottom of the screen up to make it so you don't need to decrease the gravity speed in order for it to be accurate. Right now if you set the gravity sub-steps too low, then the balls overlap, but if you set sub-steps higher then the simulation doesn't run in real time.
 
-Add a real-time viscosity slider, I think that would be an interesting challenge.
-
 GitHub Links
 ------
 [CPP File](https://raw.githubusercontent.com/EndeavoringOrb/simple_physics/master/balls.cpp)  
