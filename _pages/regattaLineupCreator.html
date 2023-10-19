@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regatta Lineup Creator</title>
+</head>
+
+<body>
+    <div id="top-half">
+        <h1>Regatta Lineup Creator</h1>
+
+        <!-- Boat entry field -->
+        <div id="entry-field-1">
+            <label>Boats</label>
+            <button onclick="addBoat()">Add Boat</button>
+            <div id="subfields"></div>
+        </div>
+
+        <!-- Athlete Names - Text Box -->
+        <div id="athlete-names">
+            <label for="athlete-names-box">Athlete Names: </label>
+            <textarea id="athlete-names-box"></textarea>
+        </div>
+
+        <!-- Coxswain Names - Text Box -->
+        <div id="coxswain-names">
+            <label for="coxswain-names-box">Coxswain Names: </label>
+            <textarea id="coxswain-names-box"></textarea>
+        </div>
+
+        <!-- Arrive at Boathouse - Time Selection -->
+        <div id="arrive-time">
+            <label for="arrive-time-input">What time should athletes arrive at the boathouse? </label>
+            <input type="time" id="arrive-time-input">
+        </div>
+
+        <!-- Bus Leaves At - Time Selection -->
+        <div id="bus-leave-time">
+            <label for="bus-leave-time-input">What time does the bus leave? </label>
+            <input type="time" id="bus-leave-time-input">
+        </div>
+
+        <!-- Coach & Coxswain Meeting - Time Selection -->
+        <div id="coach-cox-meeting-time">
+            <label for="coach-cox-meeting-time-input">What time is the Coach & Coxswain meeting? </label>
+            <input type="time" id="coach-cox-meeting-time-input">
+        </div>
+
+        <!-- Submit Button -->
+        <button onclick="submitForm()">Submit</button>
+
+        <div id="buttonContainer">
+            <button id="downloadButton">Download</button>
+        </div>
+    </div>
+    <div id="bottom-half">
+        <div id="left-panel" class="panel" style="height: 575px; overflow-y: auto;">
+            <h2>Boats</h2>
+        </div>
+        <div id="right-panel" class="panel" style="height: 575px; overflow-y: auto;">
+            <h2>Names</h2>
+        </div>
+    </div>
+</body>
+
+<!-- Include the xlsx library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+<script>
+    function generateExcelFile(dataArray) {
+        // Create a worksheet with the custom array
+        var worksheet = XLSX.utils.aoa_to_sheet(dataArray.map(row => row.map(cell => cell)));
+
+        // Create a workbook with the worksheet
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+        // Generate XLSX file data
+        const arrayBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+        // Convert array buffer to Blob
+        const blob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        // Create a temporary URL for the Blob object
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a new anchor element
+        const a = document.createElement('a');
+
+        // Set the href attribute to the Blob URL
+        a.href = url;
+
+        // Set the download attribute to specify the file name
+        a.download = 'customCells.xlsx';
+
+        // Append the anchor element to the document body
+        document.body.appendChild(a);
+
+        // Programmatically trigger a click event on the anchor element
+        a.click();
+
+        // Remove the anchor element from the document body
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    }
+
+    var subfieldData;
+    function submitForm() {
+        // Get values from input fields
+        var athleteNamesBox = document.getElementById("athlete-names-box").value;
+        var coxswainNamesBox = document.getElementById("coxswain-names-box").value;
+        var time1 = document.getElementById("arrive-time-input").value;
+        var time2 = document.getElementById("bus-leave-time-input").value;
+        var time3 = document.getElementById("coach-cox-meeting-time-input").value;
+
+        // Get values from subfields
+        var subfields = document.querySelectorAll('#subfields div');
+        subfieldData = [];
+        subfields.forEach(function (subfield) {
+            var dropdownValue = subfield.querySelector('#event_type').value;
+            var numberValue = subfield.querySelector('#bow_number').value;
+            var timeValue = subfield.querySelector('#start_time').value;
+            var shellName = subfield.querySelector('#shell_name').value;
+            var oarsName = subfield.querySelector('#oars_name').value;
+            subfieldData.push({ dropdown: dropdownValue, bow_number: numberValue, start_time: timeValue, shell: shellName, oars: oarsName });
+        });
+
+        var namesDiv = document.getElementById("right-panel");
+        namesDiv.innerHTML = '<h2>Names</h2>'; // clear
+
+        var boatsDiv = document.getElementById("left-panel");
+        boatsDiv.innerHTML = '<h2>Boats</h2>'; // clear
+
+        var selectDropdown = document.createElement("select");
+        selectDropdown.id = "boat-select"
+
+        // Add the select dropdown to boatsDiv
+        var selectLabel = document.createElement("label");
+        selectLabel.textContent = "Select Event Type: ";
+        selectLabel.appendChild(selectDropdown);
+        boatsDiv.appendChild(selectLabel);
+
+        var boatsContainer = document.createElement("div");
+        boatsContainer.className = 'grid-container';
+        boatsContainer.id = 'boats-container';
+        boatsDiv.appendChild(boatsContainer);
+
+        // Extract unique event types from subfieldData
+        var uniqueEventTypes = [...new Set(subfieldData.map(item => item.dropdown))];
+
+        var namesContainers = {}
+        var rowerContainers = {}
+        var coxContainers = {}
+
+        // Create select dropdown and add options
+        uniqueEventTypes.forEach(function (eventType) {
+            var option = document.createElement("option");
+            option.value = eventType;
+            option.text = eventType;
+            selectDropdown.appendChild(option);
+
+            // Create a new container element
+            var container = document.createElement('div');
+            container.className = 'draggable-container';
+            container.id = 'names_container_' + eventType
+
+            // Create a heading for the container
+            var heading = document.createElement('h3');
+            heading.textContent = 'Rowers';
+            heading.id = 'names-container-heading-' + eventType
+            container.appendChild(heading);
+
+            // Create a new list element for each athlete name
+            var list = document.createElement('ul');
+            list.className = 'draggable-list';
+            list.id = 'draggable-list-names-' + eventType;
+
+            // Create draggable names based on athlete names for left panel
+            athleteNamesBox.split('\n').map(name => name.trim()).forEach(function (athleteName, index) {
+                var listItem = document.createElement('li');
+                listItem.draggable = true;
+                listItem.className = 'draggable-item';
+                listItem.textContent = athleteName;
+                list.appendChild(listItem);
+            });
+
+            container.appendChild(list);
+
+            rowerContainers[eventType] = container;
+
+            // Create a new container element
+            var coxContainer = document.createElement('div');
+            coxContainer.className = 'draggable-container';
+            coxContainer.id = 'names_container_' + eventType
+
+            // Create a heading for the container
+            var heading = document.createElement('h3');
+            heading.textContent = 'Coxswains';
+            heading.id = 'names-container-heading-' + eventType
+            coxContainer.appendChild(heading);
+
+            // Create a new list element for each athlete name
+            var coxList = document.createElement('ul');
+            coxList.className = 'draggable-list';
+            coxList.id = 'draggable-list-names-' + eventType;
+
+            // Create draggable names based on coxswain names for left panel
+            coxswainNamesBox.split('\n').map(name => name.trim()).forEach(function (coxswainName, index) {
+                var listItem = document.createElement('li');
+                listItem.draggable = true;
+                listItem.className = 'draggable-item';
+                listItem.textContent = "c. " + coxswainName;
+                coxList.appendChild(listItem);
+            });
+
+            coxContainer.appendChild(coxList);
+
+            coxContainers[eventType] = coxContainer;
+        });
+
+        // Iterate through subfieldData and create a draggable list for each subfield
+        subfieldData.forEach(function (subfield, subfieldIndex) {
+            // Create a new container element
+            var container = document.createElement('div');
+            container.className = 'draggable-container';
+            container.id = subfield.dropdown + "|" + subfield.bow_number + "|" + subfield.start_time + "|" + subfield.shell + "|" + subfield.oars;
+
+            // Create a heading for the container
+            var heading = document.createElement('h3');
+            heading.textContent = subfield.shell;
+            container.appendChild(heading);
+
+            // Create a new list element for each athlete name
+            var list = document.createElement('ul');
+            list.className = 'draggable-list';
+            list.id = 'draggable-list-names'; // Unique ID for each list
+
+            container.appendChild(list);
+
+            // Append the container to the document body or any other parent element
+            boatsContainer.appendChild(container);
+        });
+
+        var selectedEventType = selectDropdown.value;
+
+        // Hide all containers
+        document.querySelectorAll('.draggable-container').forEach(function (container) {
+            container.style.display = 'none';
+        });
+
+        // Show containers with the selected event type
+        document.querySelectorAll('.draggable-container').forEach(function (container) {
+            if (container.id.split("|")[0] === selectedEventType) {
+                container.style.display = 'block';
+            }
+        });
+
+        var namesDiv = document.getElementById("right-panel");
+        namesDiv.innerHTML = '<h2>Names</h2>'; // clear
+
+        var namesContainer = document.createElement("div");
+        namesContainer.className = 'grid-container';
+        namesContainer.id = 'boats-container';
+        namesDiv.appendChild(namesContainer);
+
+        // Append the container to the document body or any other parent element
+        namesContainer.appendChild(rowerContainers[selectDropdown.value]);
+        namesContainer.appendChild(coxContainers[selectDropdown.value]);
+
+        updateDraggableItems();
+
+        updateGridColumns();
+
+        // Add event listener to the select dropdown
+        selectDropdown.addEventListener('change', function () {
+            var selectedEventType = selectDropdown.value;
+
+            // Hide all containers
+            boatsContainer.querySelectorAll('.draggable-container').forEach(function (container) {
+                container.style.display = 'none';
+            });
+
+            // Show containers with the selected event type
+            boatsContainer.querySelectorAll('.draggable-container').forEach(function (container) {
+                if (container.id.split("|")[0] === selectedEventType) {
+                    container.style.display = 'block';
+                }
+            });
+
+            var namesDiv = document.getElementById("right-panel");
+            namesDiv.innerHTML = '<h2>Names</h2>'; // clear
+
+            var namesDiv = document.getElementById("right-panel");
+            namesDiv.innerHTML = '<h2>Names</h2>'; // clear
+
+            var namesContainer = document.createElement("div");
+            namesContainer.className = 'grid-container';
+            namesContainer.id = 'boats-container';
+            namesDiv.appendChild(namesContainer);
+
+            // Append the container to the document body or any other parent element
+            namesContainer.appendChild(rowerContainers[selectDropdown.value]);
+            namesContainer.appendChild(coxContainers[selectDropdown.value]);
+            updateDraggableItems();
+
+            updateGridColumns();
+        });
+    }
+
+    function updateDraggableItems() {
+        // Get all draggable items
+        var draggableItems = document.querySelectorAll('.draggable-item');
+
+        // Iterate through each item
+        draggableItems.forEach(function (item) {
+            var itemName = item.textContent.split(' (')[0].trim();
+            var itemContainers = 0;
+
+            var containerItems = document.getElementById("boats-container").querySelectorAll('.draggable-item');
+
+            containerItems.forEach(function (contItem) {
+                if (contItem.textContent.split(' (')[0].trim() == itemName) {
+                    itemContainers++;
+                }
+            })
+
+            // Update the item's background color based on container count
+            item.style.backgroundColor = itemContainers === 0 ? '#f9f9f9' : itemContainers === 1 ? '#ffff00' : itemContainers === 2 ? '#ffa500' : '#ff6666';
+
+            // Display the number of containers inside the item
+            item.textContent = `${itemName} (${itemContainers} races)`;
+        });
+    }
+
+    // Get the button element by its ID
+    const downloadButton = document.getElementById('downloadButton');
+
+    function getSheetArray() {
+        var boats = document.getElementById("boats-container").querySelectorAll('.draggable-container');
+        // Creating a 2D array of size 5x3
+        var numRows = 15 + 16 * Math.ceil(boats.length / 4);
+        var numCols = 16;
+        var twoDArray = [];
+
+        // Loop to create rows
+        for (let i = 0; i < numRows; i++) {
+            // Create an empty row
+            const row = [];
+            // Loop to create columns for each row
+            for (let j = 0; j < numCols; j++) {
+                // Push values to the row
+                row.push("");
+            }
+            // Push the row to the 2D array
+            twoDArray.push(row);
+        }
+
+        twoDArray[2][1] = "Itinerary:";
+        twoDArray[3][1] = "Start Land Warm Up";
+        twoDArray[4][1] = "Meet Up";
+        twoDArray[5][1] = "Hands on";
+        twoDArray[6][1] = "Launch";
+        twoDArray[7][1] = "At Start Line";
+        twoDArray[8][1] = "Race Start";
+
+        twoDArray[11][1] = document.getElementById("arrive-time-input").value
+        twoDArray[12][1] = document.getElementById("bus-leave-time-input").value
+        twoDArray[13][1] = document.getElementById("coach-cox-meeting-time-input").value
+
+        twoDArray[3][2] = "Start Time - 80'";
+        twoDArray[4][2] = "Start Time - 60'";
+        twoDArray[5][2] = "Start Time - 45'";
+        twoDArray[6][2] = "Start Time - 40'";
+        twoDArray[7][2] = "Start Time - 10'";
+        twoDArray[7][2] = "Start Time";
+
+        twoDArray[2][4] = "Important Links:";
+        twoDArray[3][4] = "Regatta Packet:";
+        twoDArray[4][4] = "Regatta Central:";
+        twoDArray[5][4] = "Heat Sheet:";
+        twoDArray[6][4] = "Race Results:";
+
+        boats.forEach((container, index) => {
+            var colNumber = 4 * (index % 4);
+            var rowNumber = 15 + 16 * Math.floor(index / 4) + 2;
+            var stuff = container.id.split("|");
+            var event_type = stuff[0];
+            var bow_number = stuff[1];
+            var start_time = stuff[2];
+            var shell = stuff[3];
+            var oars = stuff[4];
+            twoDArray[rowNumber][colNumber] = start_time;
+            twoDArray[rowNumber + 1][colNumber] = "Bow " + bow_number;
+            twoDArray[rowNumber + 2][colNumber] = shell;
+            twoDArray[rowNumber + 3][colNumber] = oars;
+            twoDArray[rowNumber + 4][colNumber] = event_type;
+            var count = 5;
+            container.querySelectorAll('.draggable-item').forEach((item) => {
+                twoDArray[rowNumber + count][colNumber] = item.textContent.split(" (")[0];
+                count++;
+            });
+        });
+
+        return twoDArray;
+    }
+
+    // Add a click event listener to the button
+    downloadButton.addEventListener('click', function () {
+        // Call the function and pass the customArray as a parameter
+        generateExcelFile(getSheetArray());
+    });
+
+    window.addEventListener('load', function () {
+        updateGridColumns();
+
+        window.addEventListener('resize', updateGridColumns);
+    });
+
+    function updateGridColumns() {
+        var gridContainers = document.querySelectorAll('.grid-container');
+
+        gridContainers.forEach(function (container) {
+            var gridItems = container.querySelectorAll('.draggable-container');
+            var maxWidth = 0;
+            var numItems = 0;
+
+            gridItems.forEach(function (item) {
+                var contentWidth = item.scrollWidth;
+                maxWidth = Math.max(maxWidth, contentWidth);
+                numItems += 1;
+            });
+
+            var windowWidth = window.innerWidth / 2 - 40; //(10 * (numItems - 1));
+            var gridColumnCount = Math.max(1, Math.floor((windowWidth / 2) / maxWidth)); // Calculate the number of columns based on the maximum content width
+            container.style.gridTemplateColumns = 'repeat(' + gridColumnCount + ', 1fr)'; // Update grid-template-columns property for the container
+        });
+    }
+
+    function addBoat() {
+        var subfieldDiv = document.createElement("div");
+        subfieldDiv.innerHTML = '<label for="event_type">Event: </label>' +
+            '<select id="event_type">' +
+            '<optgroup label="Youth">' +
+            '<optgroup label="8+">' +
+            '<option value="YM8+">YM8+</option>' +
+            '<option value="YMV8+">YMV8+</option>' +
+            '<option value="YM2V8+">YM2V8+</option>' +
+            '<option value="YM3V8+">YM3V8+</option>' +
+            '<option value="YMN8+">YMN8+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4+">' +
+            '<option value="YM4+">YM4+</option>' +
+            '<option value="YMN4+">YMN4+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4-">' +
+            '<option value="YM4-">YM4-</option>' +
+            '<option value="YMN4-">YMN4-</option>' +
+            '</optgroup>' +
+            '<optgroup label="4x+">' +
+            '<option value="YM4x+">YM4x+</option>' +
+            '<option value="YMN4x+">YMN4x+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4x-">' +
+            '<option value="YM4x-">YM4x-</option>' +
+            '<option value="YMN4x-">YMN4x-</option>' +
+            '</optgroup>' +
+            '<optgroup label="2-">' +
+            '<option value="YM2-">YM2-</option>' +
+            '</optgroup>' +
+            '</optgroup>' +
+            '<optgroup label="2x">' +
+            '<option value="YM2x">YM2x</option>' +
+            '</optgroup>' +
+            '</optgroup>' +
+
+            '<option disabled>----------</option>' +
+            '<optgroup label="U17">' +
+            '<optgroup label="8+">' +
+            '<option value="U17M8+">U17M8+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4+">' +
+            '<option value="U17M4+">U17M4+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4-">' +
+            '<option value="U17M4-">U17M4-</option>' +
+            '</optgroup>' +
+            '<optgroup label="4x+">' +
+            '<option value="U17M4x+">U17M4x+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4x-">' +
+            '<option value="U17M4x-">U17M4x-</option>' +
+            '</optgroup>' +
+            '</optgroup>' +
+            '<optgroup label="2-">' +
+            '<option value="U17M2-">U17M2-</option>' +
+            '</optgroup>' +
+            '</optgroup>' +
+            '<optgroup label="2x">' +
+            '<option value="U17M2x">U17M2x</option>' +
+            '</optgroup>' +
+            '</optgroup>' +
+
+            '<option disabled>----------</option>' +
+            '<optgroup label="U16">' +
+            '<optgroup label="8+">' +
+            '<option value="U16M8+">U16M8+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4+">' +
+            '<option value="U16M4+">U16M4+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4-">' +
+            '<option value="U16M4-">U16M4-</option>' +
+            '</optgroup>' +
+            '<optgroup label="4x+">' +
+            '<option value="U16M4x+">U16M4x+</option>' +
+            '</optgroup>' +
+            '<optgroup label="4x-">' +
+            '<option value="U16M4x-">U16M4x-</option>' +
+            '</optgroup>' +
+            '<optgroup label="2-">' +
+            '<option value="U16M2-">U16M2-</option>' +
+            '</optgroup>' +
+            '</optgroup>' +
+            '<optgroup label="2x">' +
+            '<option value="U16M2x">U16M2x</option>' +
+            '</optgroup>' +
+            '</optgroup>' +
+            '</select>' +
+            '<label for="bow_number"> Bow Number: </label>' +
+            '<input type="number" id="bow_number">' +
+            '<label for="shell_name"> Shell Name: </label>' +
+            '<input type="text" id="shell_name">' +
+            '<label for="oars_name"> Oars: </label>' +
+            '<input type="text" id="oars_name">' +
+            '<label for="start_time"> Race Start Time:</label>' +
+            '<input type="time" id="start_time">';
+        document.getElementById("subfields").appendChild(subfieldDiv);
+    }
+
+    document.body.addEventListener('dragstart', (e) => {
+        if (e.target.classList.contains('draggable-item')) {
+            e.target.classList.add('dragging');
+        }
+    });
+
+    document.body.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const isDraggableContainer = e.target.classList.contains('draggable-container');
+
+        if (isDraggableContainer) {
+            const draggableList = e.target.querySelector('.draggable-list');
+            const afterElement = getDragAfterElement(draggableList, e.clientY);
+            const draggingElement = document.querySelector('.dragging');
+            if (e.target.id.includes('names_container')) {
+                // Insert the dragging element into the list
+                if (afterElement == null || draggingElement.textContent.substring(0, 3) === "c. ") {
+                    draggableList.appendChild(draggingElement);
+                } else {
+                    draggableList.insertBefore(draggingElement, afterElement);
+                }
+            } else {
+                //const containerId = parseInt(e.target.id.match(/\d+/)[0]);
+                const containerNums = e.target.id.split("|")[0].match(/\d+/g).map(Number);
+                const containerId = containerNums[containerNums.length - 1];
+                var totalElementsAllowed = isNaN(containerId) ? Infinity : containerId;
+                const allowAdditionalElement = e.target.id.includes('+');
+
+                if (allowAdditionalElement) {
+                    totalElementsAllowed++;
+                }
+
+                // Count the number of elements in the container starting with "c. "
+                const ElementsCount = Array.from(draggableList.children).filter(element =>
+                    !element.textContent.trim().startsWith('c. ')).length;
+
+                // Check if there is already an element starting with "c. "
+                const cElementExists = Array.from(draggableList.children).some(element =>
+                    element.textContent.trim().startsWith('c. '));
+
+                // Check if conditions allow adding the dragging element
+                if ((cElementExists && draggingElement.textContent.substring(0, 3) === "c. ") || ElementsCount >= totalElementsAllowed || (!allowAdditionalElement && draggingElement.textContent.substring(0, 3) === "c. ") || (allowAdditionalElement && draggingElement.textContent.substring(0, 3) != "c. " && ElementsCount >= totalElementsAllowed - 1)) {
+                    return; // Do not add the element
+                }
+
+                // Insert the dragging element into the list
+                if (afterElement == null || draggingElement.textContent.substring(0, 3) === "c. ") {
+                    draggableList.appendChild(draggingElement);
+                } else {
+                    draggableList.insertBefore(draggingElement, afterElement);
+                }
+            }
+
+            updateDraggableItems();
+        }
+    });
+
+    document.body.addEventListener('dragend', () => {
+        const draggingElement = document.querySelector('.dragging');
+        if (draggingElement) {
+            draggingElement.classList.remove('dragging');
+        }
+    });
+
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+</script>
+
+<style>
+    #buttonContainer {
+        text-align: right;
+        margin-right: 20px;
+    }
+
+    #downloadButton {
+        background-color: #4CAF50;
+        /* Green background color */
+        border: none;
+        /* Remove border */
+        color: white;
+        /* White text color */
+        padding: 10px 20px;
+        /* Add padding */
+        text-align: center;
+        /* Center the text inside the button */
+        text-decoration: none;
+        /* Remove underline from the text */
+        display: inline-block;
+        /* Make the button inline */
+        font-size: 16px;
+        /* Set font size */
+        cursor: pointer;
+        /* Add a pointer cursor on hover */
+        border-radius: 5px;
+        /* Optional: Add rounded corners */
+    }
+
+    #downloadButton:hover {
+        background-color: #45a049;
+        /* Darker green color on hover */
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    #top-half {
+        height: 50%;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    #bottom-half {
+        display: flex;
+        height: 50%;
+    }
+
+    .panel {
+        flex: 1;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    #left-panel {
+        background-color: #99cc99;
+    }
+
+    #right-panel {
+        background-color: #66b3ff;
+    }
+
+    .draggable-container {
+        border: 3px solid #000000;
+        padding: 10px;
+        width: fit-content;
+        height: fit-content;
+        margin: 5px 0;
+    }
+
+    .draggable-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .draggable-item {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 5px;
+        margin: 5px 0;
+        cursor: grab;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(20px, 1fr));
+        grid-gap: 10px;
+        padding: 20px;
+    }
+</style>
+
+</html>
