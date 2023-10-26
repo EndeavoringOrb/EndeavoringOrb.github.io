@@ -13,4 +13,7 @@ main:
     url: /RL_car/
 
   - title: "Physics Engine"
-    url: /simple_physics_sim/    
+    url: /simple_physics_sim/
+
+  - title: "Mage Madness"
+    url: /mage_madness/
