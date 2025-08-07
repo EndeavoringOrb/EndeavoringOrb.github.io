@@ -82,13 +82,13 @@ analytics:
 author:
   name             : "Aaron Belikoff"
   avatar           : "https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/face_pic.png?raw=true"
-  bio              : "Aaron Belikoff is a senior in highschool attending Fusion Academy. He enjoys coding things to demonstrate concepts he learns; they usually have to do with machine learning or physics."
-  location         : "Oakland, CA"
+  bio              : "Aaron Belikoff is a sophomore attending Worcester Polytechnic Institute. His coding projects are primarily related to AI or game development."
+  location         : "Alameda, CA | Worcester, MA"
   employer         :
   pubmed           :
   googlescholar    :
-  email            : "aaronbelikoff@gmail.com"
-  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
+  email            : "azbelikoff@wpi.edu"
+  researchgate     :
   uri              :
   bitbucket        :
   codepen          :
@@ -100,13 +100,13 @@ author:
   google_plus      :
   keybase          :
   instagram        :
-  impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
+  impactstory      :
   lastfm           :
   linkedin         :
   orcid            :
   pinterest        :
   soundcloud       :
-  stackoverflow    : # http://stackoverflow.com/users/123456/username
+  stackoverflow    :
   steam            :
   tumblr           :
   twitter          :
