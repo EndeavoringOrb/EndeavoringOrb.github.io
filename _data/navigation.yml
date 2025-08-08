@@ -3,6 +3,9 @@ main:
   - title: "Shakespeare Generator"
     url: /shak_gen/
 
+  - title: "Federated Learning"
+    url: /federated_learning/
+
   - title: "The Game"
     url: /the_game/
 
