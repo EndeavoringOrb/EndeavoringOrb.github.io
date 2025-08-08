@@ -2,7 +2,7 @@
 layout: archive
 title: "Federated Learning"
 permalink: /federated_learning/
-author_profile: true
+author_profile: false
 ---
 
 ## Overview

@@ -2,7 +2,7 @@
 layout: archive
 title: "Screenshot AI (SCAi)"
 permalink: /scai/
-author_profile: true
+author_profile: false
 ---
 
 Overview

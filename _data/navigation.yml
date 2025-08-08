@@ -6,11 +6,11 @@ main:
   - title: "Federated Learning"
     url: /federated_learning/
 
-  - title: "The Game"
-    url: /the_game/
-
   - title: "Screenshot Ai"
     url: /scai/
+
+  - title: "The Game"
+    url: /the_game/
 
   - title: "Reinforcement Learning - Warrior"
     url: /RL_warrior/
