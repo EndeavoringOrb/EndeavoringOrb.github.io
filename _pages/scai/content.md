@@ -27,7 +27,7 @@ Below is a diagram outlining the process of training the model.
 General Info About Game
 -----
 This is what the game looks like.  
-![Image of Overwatch 2](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/fullscreen_training_room2.png?raw=true)  
+![Image of Overwatch 2]({% link _pages/scai/files/fullscreen_training_room2.png %})  
 The health is shown in the bottom left corner.  
 The crosshair is in the center of the screen.  
 
@@ -37,21 +37,21 @@ Sensing Damage
 -----
 SCAi senses damage using a neural network. In Overwatch 2, you have two immediate cues to know when you have done damage. One is an audio cue which is harder to sense using a computer. The second cue is a symbol surrounding your crosshair in the middle of the screen. Depending on what type of shot you hit, the symbol will change. There are 3 main symbols,  
 the kill symbol,  
-![An image of the kill symbol which is a red skull.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/kill_shot.png?raw=true)  
+![An image of the kill symbol which is a red skull.]({% link _pages/scai/files/kill_shot.png %})  
 the headshot symbol,  
-![An image of the headshot symbol which is 4 diagonal red lines going outwards, centered at the crosshair.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/headshot_plain.png?raw=true)  
+![An image of the headshot symbol which is 4 diagonal red lines going outwards, centered at the crosshair.]({% link _pages/scai/files/headshot_plain.png %})  
 and the bodyshot symbol.  
-![An image of the bodyshot symbol which is the same as the headshot symbol except the lines are slightly shorter and they are white instead of red.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/body_shot.png?raw=true)  
+![An image of the bodyshot symbol which is the same as the headshot symbol except the lines are slightly shorter and they are white instead of red.]({% link _pages/scai/files/body_shot.png %})  
 If there is no symbol around the crosshair, then that means you missed.  
-![An image of just the crosshair because if you miss there is no symbol.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/miss.png?raw=true)  
+![An image of just the crosshair because if you miss there is no symbol.]({% link _pages/scai/files/miss.png %})  
 They symbols can also be mixed together, so if you get a kill when you headshot someone, then it combines the two symbols, and same for a bodyshot + kill. The image below is a body shot + kill.  
-![An image showing a bodyshot plus a kill, which is a red skull with the white diagonal lines of a body shot.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/cb48de249f356566fbb90d3e4d632dc647d21bd5/files/bodyshot_kill.png?raw=true)  
+![An image showing a bodyshot plus a kill, which is a red skull with the white diagonal lines of a body shot.]({% link _pages/scai/files/bodyshot_kill.png %})  
 
 Sensing Health
 -----
 SCAi senses damage using another neural network. Health is always displayed in the bottom left corner of the screen. The neural network looks at one number at a time to classify them, and I run the neural network on each of the spots where health numbers could occur. It then concatenates the numbers together to get the actual health.  
 The health image that is captured looks like this.  
-![An image showing what the health looks like.](https://github.com/EndeavoringOrb/EndeavoringOrb.github.io/blob/main/files/health_full.png?raw=true)  
+![An image showing what the health looks like.]({% link _pages/scai/files/health_full.png %})  
 It is split up into 3 sections, then each of those sections are processed independently.  
 
 What's Next?

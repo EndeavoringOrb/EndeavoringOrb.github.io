@@ -57,7 +57,7 @@ The system uses a custom communication protocol with:
 - Support for different data types (text, numpy arrays, pickled objects)
 
 More information on the math can be found in this paper I wrote for my Calc 4 final.  
-[Federated Learning Project](files/Federated_Learning_Project.pdf)
+[Federated Learning Project]({% link _pages/federated_learning/files/Federated_Learning_Project.pdf %})
 
 ## Future Work
 - Optimize training
