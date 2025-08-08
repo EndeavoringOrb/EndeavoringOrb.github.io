@@ -1,5 +1,8 @@
 # main links
 main:
+  - title: "Shakespeare Generator"
+    url: /shak_gen/
+
   - title: "The Game"
     url: /the_game/
 
