@@ -14,18 +14,3 @@ main:
 
   - title: "Screenshot Ai"
     url: /scai/
-
-  - title: "The Game"
-    url: /the_game/
-
-  - title: "Reinforcement Learning - Warrior"
-    url: /RL_warrior/
-
-  - title: "Reinforcement Learning -  Car"
-    url: /RL_car/
-
-  - title: "Physics Engine"
-    url: /simple_physics_sim/
-
-  - title: "Mage Madness"
-    url: /mage_madness/
