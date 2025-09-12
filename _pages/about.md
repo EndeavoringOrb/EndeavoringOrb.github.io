@@ -10,15 +10,15 @@ redirect_from:
 
 Welcome to my website, featuring my coding projects. Here, you can explore my projects in various programming languages and frameworks. You can click on the links at the top of the page to look at specific projects. Thank you for visiting! 
 
-Resume (Updated 2025 Sep. 9)
+Resume (Updated September 9, 2025)
 -----
-({% link files/Aaron_Belikoff_Resume_2025_09_09.pdf %})
+[📄 Download Resume (PDF)]({% link files/Aaron_Belikoff_Resume_2025_09_09.pdf %})
 
 GitHub Project Links
 -----
-[SCAi](https://github.com/EndeavoringOrb/SCAI)
+[SCAi](https://github.com/EndeavoringOrb/SCAI)  
 [RL Car](https://github.com/EndeavoringOrb/RL_car)  
-[Federated Learning](https://github.com/EndeavoringOrb/federatedLearning)
+[Federated Learning](https://github.com/EndeavoringOrb/federatedLearning)  
 
 Technology Stack
 -----
