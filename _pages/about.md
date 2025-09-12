@@ -12,7 +12,7 @@ Welcome to my website, featuring my coding projects. Here, you can explore my pr
 
 Resume (Updated September 9, 2025)
 -----
-[📄 Download Resume (PDF)]({% link files/Aaron_Belikoff_Resume_2025_09_09.pdf %})
+[Download Resume (PDF)]({% link files/Aaron_Belikoff_Resume_2025_09_09.pdf %})
 
 GitHub Project Links
 -----
