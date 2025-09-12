@@ -10,27 +10,20 @@ redirect_from:
 
 Welcome to my website, featuring my coding projects. Here, you can explore my projects in various programming languages and frameworks. You can click on the links at the top of the page to look at specific projects. Thank you for visiting! 
 
+Resume (Updated 2025 Sep. 9)
+-----
+({% link files/Aaron_Belikoff_Resume_2025_09_09.pdf %})
+
 GitHub Project Links
 -----
 [SCAi](https://github.com/EndeavoringOrb/SCAI)
-- [Damage Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/dmg_model.h5) (97.38% accuracy)  
-- [Health Sensor Model](https://github.com/EndeavoringOrb/SCAI/blob/main/health_model.h5) (99.16% accuracy)  
-
-[Car](https://github.com/EndeavoringOrb/RL_car)  
-- [Racetrack Creator](https://github.com/EndeavoringOrb/RL_car/blob/main/make_racecourse.py)
-- [Racetrack for Humans](https://github.com/EndeavoringOrb/RL_car/blob/main/car_racing.py)
-- [Racetrack for Robots](https://github.com/EndeavoringOrb/RL_car/blob/main/car_racing_test.py)
-- [Current Best Model](https://github.com/EndeavoringOrb/RL_car/blob/main/model.h5)
-- [Train a model](https://github.com/EndeavoringOrb/RL_car/blob/main/custom_network.py)
-
-[Physics Sim](https://github.com/EndeavoringOrb/simple_physics)
-- [CPP File](https://raw.githubusercontent.com/EndeavoringOrb/simple_physics/master/balls.cpp)  
-
+[RL Car](https://github.com/EndeavoringOrb/RL_car)  
+[Federated Learning](https://github.com/EndeavoringOrb/federatedLearning)
 
 Technology Stack
 -----
 ### Tools
-- [Tensorflow](https://www.tensorflow.org/) & [Pytorch](https://pytorch.org/get-started/locally/)
+- [Pytorch](https://pytorch.org/get-started/locally/)
   - CNNs  
   - LSTMs
   - Transformers
@@ -43,3 +36,4 @@ Technology Stack
 - C++  
 - C#
 - Javascript
+- SQL
