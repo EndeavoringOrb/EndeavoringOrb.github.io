@@ -35,7 +35,7 @@ I downloaded shakespeare's works from the [Folger Shakespeare Library](https://w
 
 ### 6. Using the trained model. {#inference}
   - Again, precompute some values to make inference faster.
-  - Made a little [web app](endeavoringorb.com/shak-gen) to interface with it.
+  - Made a little [web app](https://endeavoringorb.com/shak-gen/) to interface with it.
 
 ## Tech Stack {#tech-stack}
   - Python

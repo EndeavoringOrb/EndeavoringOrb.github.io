@@ -56,8 +56,7 @@ The system uses a custom communication protocol with:
 - Header-based messages specifying data length
 - Support for different data types (text, numpy arrays, pickled objects)
 
-More information on the math can be found in this paper I wrote for my Calc 4 final.  
-[Federated Learning Project]({% link _pages/federated_learning/files/Federated_Learning_Project.pdf %})
+More information on the math can be found in [this writeup]({% link _pages/federated_learning/files/Federated_Learning_Project.pdf %}).
 
 ## Future Work
 - Optimize training
