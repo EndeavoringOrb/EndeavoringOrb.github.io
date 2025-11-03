@@ -1,0 +1,134 @@
+{
+    "name": "Aaron Belikoff",
+    "image": "/static/img/profile.jpeg",
+    "description": "Software developer and AI/ML specialist with expertise in Python, C++, and JavaScript.",
+    "email": "azbelikoff@wpi.edu",
+    "github": "https://github.com/EndeavoringOrb",
+    "resume": "/static/files/common/Aaron_Belikoff_Resume_2025_11_03.pdf",
+    "tech_stack": [
+        {
+            "name": "Languages",
+            "item_list": [
+                {
+                    "name": "Python",
+                    "url": "https://www.python.org/"
+                },
+                {
+                    "name": "C++",
+                    "url": "https://isocpp.org/"
+                },
+                {
+                    "name": "JavaScript",
+                    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                },
+                {
+                    "name": "SQL",
+                    "url": "https://www.w3schools.com/sql/"
+                },
+                {
+                    "name": "C#",
+                    "url": "https://dotnet.microsoft.com/en-us/languages/csharp"
+                },
+                {
+                    "name": "Java",
+                    "url": "https://www.java.com/"
+                },
+                {
+                    "name": "MicroPython",
+                    "url": "https://micropython.org/"
+                }
+            ]
+        },
+        {
+            "name": "Frameworks & Libraries",
+            "item_list": [
+                {
+                    "name": "PyTorch",
+                    "url": "https://pytorch.org/"
+                },
+                {
+                    "name": "Flask",
+                    "url": "https://flask.palletsprojects.com/"
+                },
+                {
+                    "name": "Hugging Face",
+                    "url": "https://huggingface.co/"
+                },
+                {
+                    "name": "TensorFlow",
+                    "url": "https://www.tensorflow.org/"
+                },
+                {
+                    "name": "MediaPipe",
+                    "url": "https://ai.google.dev/edge/mediapipe/solutions/guide"
+                },
+                {
+                    "name": "Weights & Biases",
+                    "url": "https://wandb.ai/"
+                }
+            ]
+        },
+        {
+            "name": "DevOps & Tools",
+            "item_list": [
+                {
+                    "name": "Git",
+                    "url": "https://git-scm.com/"
+                },
+                {
+                    "name": "GitHub",
+                    "url": "https://docs.github.com/en/get-started/"
+                },
+                {
+                    "name": "Linux",
+                    "url": "https://www.linux.org/pages/download/"
+                }
+            ]
+        },
+        {
+            "name": "Database",
+            "item_list": [
+                {
+                    "name": "PostgreSQL",
+                    "url": "https://www.postgresql.org/"
+                },
+                {
+                    "name": "SQLite",
+                    "url": "https://www.sqlite.org/"
+                }
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "name": "shak_gen",
+            "title": "Shakespeare Text Generator",
+            "description": "AI model that generates text in the style of Shakespeare."
+        },
+        {
+            "name": "federated_learning",
+            "title": "Federated Learning",
+            "description": "Training a Recurrent Neural Network (RNN) for text generation with a distributed network of computers."
+        },
+        {
+            "name": "ScAI",
+            "title": "Screenshot AI",
+            "description": "Neural networks that play complex games based solely off the screen's pixel values."
+        },
+        {
+            "name": "rl_car",
+            "title": "Reinforcement Learning - Car",
+            "description": "Training a neural network to race a car around a track in a 2D environment."
+        },
+        {
+            "name": "image_painter",
+            "title": "Image Painter",
+            "description": "Creates a painterly stylization of an input image using bezier curves."
+        },
+        {
+            "name": "poverty_assess_ai",
+            "title": "Poverty Assessment AI",
+            "description": "Fine tuned a LLM to classify a household's poverty status given a description."
+        }
+    ]
+}

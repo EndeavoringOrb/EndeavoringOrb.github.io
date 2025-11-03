@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}About Me{% endblock %}
+
+{% block content %}
+<div class="item-card">
+    <div class="profile-header">
+        <img src="{{ profile.image }}" alt="{{ profile.name }}" class="profile-image">
+        <h1 class="profile-name">{{ profile.name }}</h1>
+    </div>
+
+    <div class="profile-description">
+        <p>{{ profile.description }}</p>
+    </div>
+
+    <div class="profile-contact">
+        <a href="mailto:{{ profile.email }}" class="contact-item">
+            <img src="/static/icons/email-svgrepo-com.svg" alt="{{ profile.email }}"
+                class="icon">
+            {{ profile.email }}
+        </a>
+        <a href="{{ profile.github }}" target="_blank" class="contact-item">
+            <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+            GitHub
+        </a>
+        <a href="{{ profile.resume }}" target="_blank" class="contact-item">
+            Resume
+        </a>
+    </div>
+</div>
+
+<div class="tech-stack-section">
+    <h2>Technology Stack</h2>
+    <div class="tech-categories">
+        {% for category in profile.tech_stack %}
+        <div class="tech-category">
+            <h3>{{ category.name }}</h3>
+            <div class="tech-items">
+                {% for tech in category.item_list %}
+                <a href="{{ tech.url }}" target="_blank" class="tech-item">{{ tech.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="projects-section">
+    <h2>Projects</h2>
+    <div class="item-grid">
+        {% for project in profile.projects %}
+        <div class="item-card">
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description }}</p>
+            <a href="/projects_html/{{ project.name }}.html" class="item-link">
+                Learn More
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

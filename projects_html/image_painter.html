@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Painter</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">EndeavoringOrb's Website</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Image Painter</h2>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Image Painter</h1>
+            
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p>Creates a painterly stylization of an input image using bezier curves.</p>
+<h2 id="example">Example</h2>
+<p>Input Image
+<img alt="Input Image" src="/static/files/image_painter/input.jpg" /><br />
+Result
+<img alt="Resulting Image" src="/static/files/image_painter/result.png" />  </p>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

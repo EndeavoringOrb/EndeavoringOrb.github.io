@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}{{ metadata.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>{{ metadata.title }}</h2>
+        {% if metadata.sections %}
+        <nav class="project-navigation">
+            <ul>
+                {% for section in metadata.sections %}
+                <li>
+                    <a href="#{{ section.id }}">{{ section.title }}</a>
+                    {% if section.subsections %}
+                    <ul class="subsection-list">
+                        {% for subsection in section.subsections %}
+                        <li><a href="#{{ subsection.id }}">{{ subsection.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        {% endif %}
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>{{ metadata.title }}</h1>
+            {% if metadata.date %}
+            <div class="project-date">{{ metadata.date }}</div>
+            {% endif %}
+            {% if metadata.github %}
+            <div class="project-links">
+                <a href="{{ metadata.github }}" target="_blank" class="github-link">
+                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+                    View on GitHub
+                </a>
+            </div>
+            {% endif %}
+            {% if metadata.demo %}
+            <div class="project-links">
+                <a href="{{ metadata.demo }}" target="_blank" class="demo-link">
+                    Project Demo
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="project-body">
+            {{ content }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+{% endblock %}

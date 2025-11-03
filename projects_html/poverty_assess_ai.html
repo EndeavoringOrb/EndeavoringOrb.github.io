@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poverty Assessment AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">EndeavoringOrb's Website</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Poverty Assessment AI</h2>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Poverty Assessment AI</h1>
+            
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p>Fine tuned Llama 3.2 1B to classify a household's poverty status given a description.</p>
+<h2 id="project-explanation">What did I do?</h2>
+<h3 id="getting-data">1. Data</h3>
+<p><a href="https://hdr.undp.org/content/2024-global-multidimensional-poverty-index-mpi#/indicies/MPI">(MHS &amp; DHS) Multidimensional Poverty Index</a>
+<a href="https://www.povertystoplight.org/">Poverty Stoplight</a></p>
+<h3 id="data-cleaning">2. Convert to natural language.</h3>
+<p>The data was stored in a .csv file, so we made a script that converted this data to sentences. For example if a column 'clean_water_access' is 0, the sentence would be 'The household does not have access to clean water.' otherwise it would be 'The household has access to clean water.'.</p>
+<p>So we concatenated a bunch of these sentences into one paragraph for each household. Then the target output for the model would be "normal", "vulnerable", "poor", or "extremely poor" depending on the score in the database.</p>
+<h3 id="3-fine-tune-model">3. Fine tune model</h3>
+<p>Used <a href="https://huggingface.co/docs/trl/main/en/sft_trainer">SFTTrainer</a> to fine tune the model on the prepared data. Fine tuning took roughly a day.</p>
+<h3 id="4-test-model">4. Test model</h3>
+<p>Tested the model on a separate test set.</p>
+<p>Detailed Metrics:
+- normal: TP=4994, FP=26, FN=13, TN=2943, Precision=0.995, Recall=0.997, F1=0.996<br />
+- vulnerable: TP=262, FP=8, FN=12, TN=7694, Precision=0.970, Recall=0.956, F1=0.963<br />
+- poor: TP=2628, FP=4, FN=8, TN=5336, Precision=0.998, Recall=0.997, F1=0.998<br />
+- extremely poor: TP=53, FP=1, FN=6, TN=7916, Precision=0.981, Recall=0.898, F1=0.938  </p>
+<p>Overall Metrics:<br />
+- Accuracy: 0.995<br />
+- Precision: 0.986<br />
+- Recall: 0.962<br />
+- F1 Score: 0.974  </p>
+<h3 id="5-create-demo-website-for-model">5. Create demo website for model</h3>
+<p>Using flask I created a website that interfaces with the model via Ollama.<br />
+<a href="http://poverty-assess-ai.wpi.edu/about">Poverty Assessment AI</a></p>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

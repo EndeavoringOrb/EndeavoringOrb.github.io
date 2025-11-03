@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federated Learning</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">EndeavoringOrb's Website</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Federated Learning</h2>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Federated Learning</h1>
+            
+            
+            <div class="project-links">
+                <a href="https://github.com/EndeavoringOrb/federatedLearning" target="_blank" class="github-link">
+                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+                    View on GitHub
+                </a>
+            </div>
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Overview</h2>
+<p>This is a system for training a text generation Recurrent Neural Network (RNN) using multiple clients/computers.</p>
+<p>The system consists of a server and multiple clients that work together to train a language model. The server distributes training data and model weights to clients, while clients perform computation and send back rewards (loss values) that are used to update the model's parameters.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>Distributed Training</strong>: Leverages multiple machines to accelerate training</li>
+<li><strong>Simple RNN Language Model</strong>: Implements a character-level language model with RNN architecture</li>
+<li><strong>Efficient Communication</strong>: Custom protocol for sending data between server and clients</li>
+<li><strong>Gradient-based Optimization</strong>: Uses Adam optimizer for efficient parameter updates</li>
+</ul>
+<h2 id="how-it-works">How It Works</h2>
+<ol>
+<li>The server initializes model weights and starts listening for client connections</li>
+<li>Clients connect to the server and receive initial weights and configuration</li>
+<li>For each training step:<ul>
+<li>(Optional, can happen every N steps) Server distributes tokenized text data to clients</li>
+<li>Clients compute loss values using the current model weights with added noise</li>
+<li>Clients send loss values back to the server</li>
+<li>Server normalizes the rewards and sends them back to clients</li>
+<li>Clients update their local copy of the model weights based on these normalized rewards</li>
+<li>Periodically, the server requests updated weights from a client to save checkpoints</li>
+</ul>
+</li>
+</ol>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="model-architecture">Model Architecture</h3>
+<p>The system implements a recurrent neural network (RNN) language model with the following components:</p>
+<ul>
+<li>Multiple RNN layers with tanh activation functions</li>
+<li>Hidden state that captures context information</li>
+<li>Output layer that predicts probabilities for the next token</li>
+<li>Support for beam search during generation</li>
+</ul>
+<h3 id="optimization">Optimization</h3>
+<p>The model is trained using:</p>
+<ul>
+<li>Distributed gradient estimation</li>
+<li>Adam optimizer for parameter updates</li>
+<li>Configurable learning rate and other hyperparameters</li>
+</ul>
+<h3 id="communication-protocol">Communication Protocol</h3>
+<p>The system uses a custom communication protocol with:</p>
+<ul>
+<li>Header-based messages specifying data length</li>
+<li>Support for different data types (text, numpy arrays, pickled objects)</li>
+</ul>
+<p>More information on the math can be found in this paper I wrote for my Calc 4 final.<br />
+<a href="/static/files/federated_learning/Federated_Learning_Project.pdf">Federated Learning Project</a></p>
+<h2 id="future-work">Future Work</h2>
+<ul>
+<li>Optimize training<ul>
+<li>Port to C++</li>
+<li>Implement sequence packing for higher average batch sizes</li>
+</ul>
+</li>
+<li>Add support for different model architectures</li>
+<li>Add support for different datasets</li>
+<li>Add support for tool calling</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

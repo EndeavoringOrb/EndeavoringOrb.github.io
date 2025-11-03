@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinforcement Learning - Car</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">EndeavoringOrb's Website</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Reinforcement Learning - Car</h2>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Reinforcement Learning - Car</h1>
+            
+            
+            <div class="project-links">
+                <a href="https://github.com/EndeavoringOrb/RL_car" target="_blank" class="github-link">
+                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+                    View on GitHub
+                </a>
+            </div>
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h1 id="overview">Overview</h1>
+<p>The goal of this project is to make a car go as fast as possible around a track without touching the sides. The car will learn how to do this through reinforcement learning.</p>
+<h2 id="how-it-works">How it Works</h2>
+<p>The car has 8 lines that extend outwards from it that measure distance to the nearest wall. These eight distances are used as the input to the reinforcement learning model.<br />
+The track that it is driving on is actually just a numpy array of values, where white is 1 and black is 0. It uses a function to find the nearest black item in the numpy array in a certain direction, which gives it the distance to the wall.  </p>
+<p>The image below is a racetrack I created. The black is a wall, the white is the track, and the purple dots are the reward dots. The two green dots are the front of the car, the two blue dots are the back of the car. The red dots are the sensors, they mark the wall in a certain direction with respect to the car.  </p>
+<p><img alt="Image of a racetrack." src="/static/files/rl_car/racetrack.png" />  </p>
+<p>If you want to play around with it a bit, then go to the link at the bottom of this page labeled "Racing Track for Humans". If you run that python file you will be able to race on that racetrack. In order to do that you need to have config2.npy, image2.npy and image2.png in order to get that specific racetrack, otherwise you have to create your own with the racetrack creator.  </p>
+<h2 id="racetrack-creator">Racetrack Creator</h2>
+<p>When you start this program a 1000x1000 window will pop up.<br />
+- To draw a track you left-click and drag.<br />
+- To add the reward points, move your mouse to where you want the point then press space.<br />
+- To add the car's starting point, press "s" on the keyboard ONCE.<br />
+- To save the racetrack, press "s" again.  </p>
+<h2 id="racetrack-for-robots">Racetrack for Robots</h2>
+<p>Steps for running:<br />
+- First change the file path at the beginning of the program to the path of the model you want to use.
+- Then change the img_num to the racetrack number. The img_num is the number in the config file and the image files (i.e. config2.py means img_num should be 2 if you want that racetrack).
+- Other variables are explained in comments in file.</p>
+<h2 id="train-a-model">Train a model</h2>
+<p>Steps for running:
+- img_num should be set to the racetrack number you want to use
+- steps controls the max timesteps the simulation can run before restarting
+- the model number input is just for saving the models so you can have different versions
+The model will be saved as a .zip file.</p>
+<h2 id="whats-next">What's next?</h2>
+<p>Change the rewards from dots that give a reward when you drive over them to lines that cross the track that give a reward when you drive over them.<br />
+Add zoomed in viewer and more advanced racecourse maker. With those two things together you would be able to make racetracks larger than the screen size.  </p>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

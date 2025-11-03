@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot AI (ScAI)</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">EndeavoringOrb's Website</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Screenshot AI (ScAI)</h2>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Screenshot AI (ScAI)</h1>
+            
+            
+            <div class="project-links">
+                <a href="https://github.com/EndeavoringOrb/SCAI" target="_blank" class="github-link">
+                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+                    View on GitHub
+                </a>
+            </div>
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p>======
+Screenshot AI (SCAi) is a project that seeks to build neural networks to play complex games based solely off the pixel values of the screen.  </p>
+<p>Concepts Used:<br />
+- Image Recognition<br />
+  - CNNs<br />
+- Autoencoder
+- Reinforcement Learning
+  - Stable Baselines 3
+    - PPO algorithm</p>
+<h2 id="how-scai-works">How SCAi Works</h2>
+<p>Right now I am working with the game Overwatch 2, once the model is functional to a satisfactory degree the plan is to extend to other games.
+The core of the program is using reinforcement learning to train the model.
+Below is a diagram outlining the process of training the model.</p>
+<html>
+<head>
+<title>diagram1.html</title>
+<meta charset="utf-8"/>
+</head>
+<body>
+<div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;app.diagrams.net\&quot; modified=\&quot;2023-03-03T06:31:31.741Z\&quot; agent=\&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36\&quot; etag=\&quot;5VV3lbgg1ovc7CR5Nhg9\&quot; version=\&quot;21.0.1\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;C5RBs43oDa-KdzZeNtuy\&quot; name=\&quot;Page-1\&quot;&gt;7VpZd5s6EP41fnQOi43xY+w6abqk6XF70z4qIAO1QL5C2Ob++kogVhEvwTb1PX1JPMOApFk+fSPo6VN/e0/Ayv2MbYh6mmJve/q7nqapujpk/7gmTjUjXU0VDvFsYVQo5t5/UCgVoY08G4YVQ4oxot6qqrRwEECLVnSAELypmi0wqo66Ag6UFHMLIFn77NnUTbWmNir076HnuNnIqjFOr/ggMxYrCV1g401Jpc96+pRgTNNf/nYKEXde5pfnh/gZfVoa9x++hv+C75OP3x7/6acPuzvmlnwJBAb0zY/uf7nHXxVjtfylLx5m33/8nE3mfU1Edw1QJBxG4AYQOxRrpnHmSGgzvwoRE+piBwcAzQrthOAosCEfTmFSYfMJ4xVTqkz5C1IaiyQBEcVM5VIfiatseST+we+/GWbiz/K1d1vx8FSKhZTOlU+wFvM9DhN2IY6IBXfY6SJvAXHgrucZeVawcoLYh2yS7D4CEaDeujo5IPLaye3yW5+wx6atKaIGR1kpiQrUx0r1Eem8xF1FBtwSAuKS2YobhK+PY4xq4wyG1YSqz0tvaT9Wdtrnhddsz36kK8ykks8LVVIER9SaLtXDI4wI4Pc9QrrBZJkAGM8aGISQ/d+4kLqQcIgEPgcjpmIuZyIO4I1URkWR8KzeuB6F8xVI0m/DELhaEAscUFEtKgvbxEEgDEXSh5TgZY5p3DoHqKImDi2BNSQUbksJKmdxliW1bNSGQt4U6KpmkXNLyDqsZW058UsxPT5kMoTdWtTDQXsIK0WiAbgaAa4csRS27Fu+izH5BWFrmaruPL5EgWTZpmnuDyoCLxBNgLV0kolOMcKEXQpYplXgswyeJSzdCZ8nQ0tDRsvGvcdshG058eIqoXgrmmYmeLEIYQUoJeTRa8iTj70HcU8FQoaU0U9PX/jwyMHEo64vo4qL/Zco3I8olXTiyXoHfA/xdb6HaA2pZ4EG3AHIcwImWCxDGNQ15ikb0gscJhmF9C2pi/7gjHik1natXC7jkdKAR+YJ8KiZUxndcKccaHI4KOPMCTlS46qV5ii15T51zmCch/uYda4x2M1NZO5zpL15Wi7zekiO4jIuyx/W+USWmxQLQJT/iHHERbDunM5IsHBoAr8KHyOjQzrTDB9S1LxgFdFuMKUNoTgf1mTnCG/sx85OKE5VwKqUCrPAwjykfNYrAlndUsC5LlPgBXedRSAM/ndVWus5VHPYcZGO/5ajROT3En71PBxhMLoYW29eVsfJUD0rU64lGcyWydCqfk0JWacM9QhGiJ/kXGlzdXrcrTfC3TdXakfNVXOx9ZUbRd8Hv4n0BInHPMDjexmKpBzIkfQuyzB78GWj2YXvz9Izt/O91oXvQ+YUWjuoOHc8tIb3N6/z7dOfYdTJ63mOMOrDDC5wwqDKRwzzpAMJXUyznsQBPpT31CvvSAbmn9aS5K+p//YkOb28RFPSjs7IRPQjjF8wILzHBwH/6+MoOZxLjoHkl1rXXkl6/YXiuPMTuIEUlG5Kq36i/8cQF60tazxwpxwetFNKzxkO9zwo9UTrLVca5xJ7riZ/ovAgvjuAyelgQwN75RCh1f2sng8imFh80pXGrPgwTp/9Bg==&lt;/diagram&gt;&lt;/mxfile&gt;&quot;,&quot;toolbar&quot;:&quot;pages zoom layers lightbox&quot;,&quot;page&quot;:0}"></div>
+<script type="text/javascript" src="https://app.diagrams.net/js/viewer-static.min.js"></script>
+</body>
+</html>
+
+<h2 id="general-info-about-game">General Info About Game</h2>
+<p>This is what the game looks like.<br />
+<img alt="Image of Overwatch 2" src="/static/files/ScAI/fullscreen_training_room2.png" /><br />
+The health is shown in the bottom left corner.<br />
+The crosshair is in the center of the screen.  </p>
+<p>Overwatch 2 is a First Person Shooter game, basically the goal is to shoot other people before they shoot you. It's a little bit more complicated than that because there are different types of characters, and different gamemodes like capture the point, or escorting a truck through an area, but those will be worked on after the model is good at combat.</p>
+<h2 id="sensing-damage">Sensing Damage</h2>
+<p>SCAi senses damage using a neural network. In Overwatch 2, you have two immediate cues to know when you have done damage. One is an audio cue which is harder to sense using a computer. The second cue is a symbol surrounding your crosshair in the middle of the screen. Depending on what type of shot you hit, the symbol will change. There are 3 main symbols,<br />
+the kill symbol,<br />
+<img alt="An image of the kill symbol which is a red skull." src="/static/files/ScAI/kill_shot.png" /><br />
+the headshot symbol,<br />
+<img alt="An image of the headshot symbol which is 4 diagonal red lines going outwards, centered at the crosshair." src="/static/files/ScAI/headshot_plain.png" /><br />
+and the bodyshot symbol.<br />
+<img alt="An image of the bodyshot symbol which is the same as the headshot symbol except the lines are slightly shorter and they are white instead of red." src="/static/files/ScAI/body_shot.png" /><br />
+If there is no symbol around the crosshair, then that means you missed.<br />
+<img alt="An image of just the crosshair because if you miss there is no symbol." src="/static/files/ScAI/miss.png" /><br />
+They symbols can also be mixed together, so if you get a kill when you headshot someone, then it combines the two symbols, and same for a bodyshot + kill. The image below is a body shot + kill.<br />
+<img alt="An image showing a bodyshot plus a kill, which is a red skull with the white diagonal lines of a body shot." src="/static/files/ScAI/bodyshot_kill.png" />  </p>
+<h2 id="sensing-health">Sensing Health</h2>
+<p>SCAi senses damage using another neural network. Health is always displayed in the bottom left corner of the screen. The neural network looks at one number at a time to classify them, and I run the neural network on each of the spots where health numbers could occur. It then concatenates the numbers together to get the actual health.<br />
+The health image that is captured looks like this.<br />
+<img alt="An image showing what the health looks like." src="/static/files/ScAI/health_full.png" /><br />
+It is split up into 3 sections, then each of those sections are processed independently.  </p>
+<h2 id="whats-next">What's Next?</h2>
+<p>Right now the model is ready to run, the only problem is that my computer is not strong enough to handle the model. The model has an input shape of (720,1280,3) which is way too many inputs for my computer to handle. This is where the image encoder comes in. If the image encoder can compress the information in the image efficiently, then the input size will be much easier to handle.</p>
+<h2 id="image-encoder">Image Encoder</h2>
+<p>My attempts at using an autoencoder to encode the image just ended in low pixel versions of the image, which I could fall back on if nothing else works, but I would prefer to get an encoding that can be decoded to a higher resolution.  </p>
+<p>The next thing I tried was extracting important features from the image before putting the images through the autoencoder. In Overwatch 2, all enemies have a red outline, so if we filter for a certain range of red then we can filter out everything except for the enemies outlines. This in principle should make it easier for the autoencoder to encode the images because there is less "noise" in the image.  </p>
+<p>The problem with that approach is that because so much of the image is just black, the decoder decodes the encoded representation of the image to a fully black image every time. Because there is so much black in the input image, and only thin outlines of red, it can get the loss very low by decoding to a fully black image every time.</p>
+<p>The next thing I am going to try is randomizing the background color of the input image. I think it might be easier for the model if the background color is randomized, because then the autoencoder can't predict the background color and will focus on predicting the outlines which would be the only non-randomized part of the image.</p>
+<p>If that doesn't work I will try to change the loss function so it only takes into account the pixels that are not empty in the original image.</p>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>
