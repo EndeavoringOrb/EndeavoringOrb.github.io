@@ -51,7 +51,7 @@ def generate_site():
     print('Generated index.html')
 
     # Generate project pages
-    projects_dir = 'projects'
+    projects_dir = '_projects'
     output_dir = 'projects_html'
     if os.path.exists(projects_dir):
         if os.path.exists(output_dir):
