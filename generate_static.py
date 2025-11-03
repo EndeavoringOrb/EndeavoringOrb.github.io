@@ -15,13 +15,14 @@ def process_content(content, project_dir):
 
     def handle_include(match):
         filename = match.group(1)
-        include_path = os.path.join(project_dir, filename)
+        include_path = os.path.join("static/files", project_dir.split("/")[-1].split("\\")[-1], filename)
         # Check if the file exists
         if os.path.exists(include_path):
             with open(include_path, 'r', encoding='utf-8') as f:
                 file_content = f.read()
             return file_content
         else:
+            print(f'<!-- File {filename} not found at {include_path} -->')
             return f'<!-- File {filename} not found -->'
 
     # Replace {% include filename %} tags with file content
