@@ -1,0 +1,22 @@
+title: "Tensor Graphs"
+github: https://github.com/EndeavoringOrb/tensor_graphs
+sections:
+  - id: "overview"
+    title: "Project Overview"
+  - id: "how"
+    title: "How It Works"
+    subsections:
+      - id: "egraphs"
+        title: "Rewriting with E-Graphs"
+      - id: "search"
+        title: "Planning as a Search Problem"
+      - id: "kernels"
+        title: "Kernels & Backends"
+  - id: "results"
+    title: "Results"
+  - id: "process"
+    title: "How I Worked"
+  - id: "learned"
+    title: "What I Learned"
+  - id: "tech-stack"
+    title: "Technology Stack"

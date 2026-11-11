@@ -4,7 +4,7 @@
     "description": "Software developer and AI/ML specialist with expertise in Python, C++, and JavaScript.",
     "email": "azbelikoff@wpi.edu",
     "github": "https://github.com/EndeavoringOrb",
-    "resume": "/static/files/common/Aaron_Belikoff_Resume_2026_07_21.pdf",
+    "resume": "/static/files/common/Aaron_Belikoff_Resume_2026_10_17.pdf",
     "tech_stack": [
         {
             "name": "Languages",
@@ -100,6 +100,31 @@
         }
     ],
     "projects": [
+        {
+            "name": "hand_tracking",
+            "title": "Hand Tracking for Spellcasting",
+            "description": "Fingertip tracking from a webcam for a gesture-controlled wizard game: custom data pipeline, CUDA augmentation, and C++ inference."
+        },
+        {
+            "name": "engine_3d",
+            "title": "3D Software Renderer & Physics Engine",
+            "description": "A 3D engine written from scratch in C++, with a CPU rasterizer, Verlet physics, and simulated cloth."
+        },
+        {
+            "name": "causal_inference",
+            "title": "Causal Inference with LLM Agents",
+            "description": "An LLM agent that does causal inference end to end on raw datasets. Published at MIT URTC 2025."
+        },
+        {
+            "name": "fractal_particles",
+            "title": "Fractal Particles",
+            "description": "Animated 3D fractals from particle systems, rendered on the CPU with point splatting and ray marching."
+        },
+        {
+            "name": "tensor_graphs",
+            "title": "Tensor Graphs",
+            "description": "An ML compiler and inference engine in C++ that uses e-graphs and constraint search to plan execution across CPU and GPU."
+        },
         {
             "name": "shak_gen",
             "title": "Shakespeare Text Generator",

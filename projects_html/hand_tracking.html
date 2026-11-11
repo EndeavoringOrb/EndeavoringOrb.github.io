@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Tracking for Spellcasting</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">Home</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Hand Tracking for Spellcasting</h2>
+        
+        <nav class="project-navigation">
+            <ul>
+                
+                <li>
+                    <a href="#overview">Project Overview</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#why">Why Build My Own?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#data">Data Pipeline</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#model">Model & Training</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#game">Running It in the Game</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#status">Where It's At</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#tech-stack">Technology Stack</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Hand Tracking for Spellcasting</h1>
+            
+            
+            <div class="project-links">
+                <a href="https://github.com/EndeavoringOrb/AirHandWriter" target="_blank" class="github-link">
+                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+                    View on GitHub
+                </a>
+            </div>
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p>The game I eventually want to make is a wizard dueling game where you cast spells with your hands: a webcam watches your hand, you trace a spell's shape in the air, and the game recognizes it. That requires fast, reliable fingertip tracking that can run inside a C++ game loop.</p>
+<p>This project is that tracker. It finds the thumb and index fingertips in a webcam frame, so the game can tell where you're pointing and whether you're pinching (pinch = pen down).</p>
+<!-- TODO: add a short clip of the tracker running live, e.g. ![Live tracking](/static/files/hand_tracking/demo.mp4) or a GIF -->
+
+<h2 id="why">Why Build My Own?</h2>
+<p>Google's MediaPipe already does hand tracking, and I use it in this project to label data. I built my own model anyway for two reasons:</p>
+<ul>
+<li><strong>I wanted to learn the whole pipeline</strong>: collecting data, labeling it, cleaning it, training, and deploying. Using an off-the-shelf model skips all of that.</li>
+<li><strong>I wanted a tiny model I could run from C++</strong> inside the game, without a Python process on the side.</li>
+</ul>
+<h2 id="data">Data Pipeline</h2>
+<p>Most of the work in this project went into the data, not the model.</p>
+<ol>
+<li><strong>Collection with automatic labels.</strong> A capture script records webcam frames and runs MediaPipe on each one to get fingertip positions. My model is essentially learning to reproduce MediaPipe's output (distillation), but only for the points I need.</li>
+<li><strong>More variety from HaGRID.</strong> My own webcam footage is all the same room, lighting and hand, so I added frames from the <a href="https://github.com/hukenovs/hagrid">HaGRID</a> hand-gesture dataset and labeled them with MediaPipe too.</li>
+<li><strong>Review tool.</strong> MediaPipe isn't always right, and bad labels hurt training. I wrote a review tool to step through samples, see the labels drawn on the image, and fix or throw out bad ones. It can also sort the dataset by the current model's loss on each sample, so the samples where the model and the label disagree most (often bad labels) come up first.</li>
+<li><strong>Pinch labels.</strong> A small Flask app for labeling the pinch point by hand, since MediaPipe doesn't give that directly.</li>
+</ol>
+<p>Data is stored in chunked binary files instead of individual image files, which keeps loading fast.</p>
+<h2 id="model">Model &amp; Training</h2>
+<ul>
+<li><strong>Model:</strong> I started with very small CNNs (a few thousand parameters) and moved to a small ResNet. It outputs the (x, y) position of the thumb and index fingertips, plus a <strong>variance for each prediction</strong>. Training with a Gaussian negative log-likelihood loss means the model also learns to say how sure it is, which the game can use to ignore shaky frames.</li>
+<li><strong>GPU augmentation:</strong> Random translation, crop-and-resize, rotation and color jitter. CPU-side augmentation was the bottleneck, so I wrote the geometric augmentations as <strong>custom CUDA kernels</strong> (as a PyTorch extension) that transform the images and keypoints together on the GPU.</li>
+<li><strong>Training setup:</strong> Mixed precision, a low-memory mode for larger datasets, and logging of every run's config and results.</li>
+<li><strong>Hyperparameter sweeps:</strong> A small Flask dashboard to launch runs, compare them, and run Bayesian-optimization sweeps over the hyperparameters.</li>
+</ul>
+<h2 id="game">Running It in the Game</h2>
+<p>To use the model without Python, I export the trained weights to a binary file and run inference with a small <strong>from-scratch C++ implementation</strong> of the network (convolutions, normalization, the ResNet blocks), plus OpenCV for the camera and preprocessing. This lives in the <a href="https://github.com/EndeavoringOrb/mageGame">mage game repo</a>.</p>
+<h2 id="status">Where It's At</h2>
+<p>The tracker runs live on a webcam. The game itself is early: it has movement and a spell system, but the gesture-to-spell part isn't wired up yet. Building this taught me that most of the effort in an applied ML project is in the data: collecting it, finding the bad labels, and making the dataset varied enough.</p>
+<h2 id="tech-stack">Technology Stack</h2>
+<ul>
+<li>Python, PyTorch, CUDA (custom kernels), OpenCV, MediaPipe</li>
+<li>Flask (labeling and training dashboards), scikit-optimize</li>
+<li>C++ (inference in the game)</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

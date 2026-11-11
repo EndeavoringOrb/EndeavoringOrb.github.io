@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal Particles</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">Home</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Fractal Particles</h2>
+        
+        <nav class="project-navigation">
+            <ul>
+                
+                <li>
+                    <a href="#overview">Project Overview</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#how">How It Works</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#rendering">Rendering</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#gallery">Gallery</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#next">What's Next</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#tech-stack">Technology Stack</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Fractal Particles</h1>
+            
+            
+            <div class="project-links">
+                <a href="https://github.com/EndeavoringOrb/fractalParticles" target="_blank" class="github-link">
+                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+                    View on GitHub
+                </a>
+            </div>
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p>Animated 3D fractals made of particles (100,000 per frame, accumulated over many frames), rendered on the CPU in C++. I saw <a href="https://www.youtube.com/@Acerola_t">Acerola</a> make something like this, thought it looked cool, and wrote my own version from scratch, focusing on making it fast.</p>
+<p><img alt="A wispy fractal cloud" src="/static/files/fractal_particles/wisps.jpg" /></p>
+<h2 id="how">How It Works</h2>
+<p>The fractal is an <strong>iterated function system</strong>, drawn with the "chaos game":</p>
+<ol>
+<li>Pick a few random 3D affine transforms (scale, rotation, shear, translation).</li>
+<li>Start with a cloud of random points. Every step, move each point by one of the transforms, picked at random.</li>
+<li>After a few iterations the points settle onto the fractal that those transforms define.</li>
+</ol>
+<p>To animate it, the program smoothly interpolates each transform toward a new random target, then picks another target when it gets there. The fractal keeps morphing into new shapes.</p>
+<h2 id="rendering">Rendering</h2>
+<p>I tried a few different renderers:</p>
+<ul>
+<li><strong>Point splatting:</strong> Project every particle onto the screen and accumulate how many land on each pixel, then map that density to brightness. Accumulating over several frames smooths out the noise.</li>
+<li><strong>Ray marching:</strong> Treat the fractal as a volume of density, march a ray through it for each pixel, and attenuate light as it passes through (Beer-Lambert absorption), so the fractal looks like glowing smoke instead of points.</li>
+<li><strong>Discrete ray marching:</strong> First bin the particles into a 3D grid of densities, then ray march through the grid, which is much cheaper to sample.</li>
+</ul>
+<p>Everything runs on the CPU, compiled with aggressive optimization flags (<code>-O3 -march=native -ffast-math</code>), with per-frame values precomputed outside the hot loops. There is also an offline mode that renders frames to disk to stitch into a video with ffmpeg.</p>
+<h2 id="gallery">Gallery</h2>
+<p><img alt="Fern-like fractal" src="/static/files/fractal_particles/fern.jpg" />
+<img alt="Branching fractal" src="/static/files/fractal_particles/branches.jpg" />
+<img alt="Spiky fractal" src="/static/files/fractal_particles/spikes.jpg" />
+<img alt="Soft fractal cloud" src="/static/files/fractal_particles/cloud.jpg" /></p>
+<!-- TODO: add a rendered video of the fractal morphing -->
+
+<h2 id="next">What's Next</h2>
+<p>I've learned a lot more about CPU optimization since I wrote this (SIMD, cache-friendly memory layouts, multithreading), and I could make it much faster now. It would also be a good project for learning <strong>Vulkan</strong> to run it on my laptop's GPU, since OpenCL doesn't handle its unified memory well.</p>
+<h2 id="tech-stack">Technology Stack</h2>
+<ul>
+<li>C++</li>
+<li>GLM (vector math)</li>
+<li>SFML (window and display)</li>
+<li>ffmpeg (video export)</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

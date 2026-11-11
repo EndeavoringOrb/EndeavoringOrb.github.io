@@ -1,0 +1,15 @@
+title: "Fractal Particles"
+github: https://github.com/EndeavoringOrb/fractalParticles
+sections:
+  - id: "overview"
+    title: "Project Overview"
+  - id: "how"
+    title: "How It Works"
+  - id: "rendering"
+    title: "Rendering"
+  - id: "gallery"
+    title: "Gallery"
+  - id: "next"
+    title: "What's Next"
+  - id: "tech-stack"
+    title: "Technology Stack"

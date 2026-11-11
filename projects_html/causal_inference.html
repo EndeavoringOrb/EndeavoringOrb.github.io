@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Causal Inference with LLM Agents</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">Home</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Causal Inference with LLM Agents</h2>
+        
+        <nav class="project-navigation">
+            <ul>
+                
+                <li>
+                    <a href="#overview">Project Overview</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#problem">The Problem</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#approach">Our Approach</a>
+                    
+                    <ul class="subsection-list">
+                        
+                        <li><a href="#framework">6-Step Framework</a></li>
+                        
+                        <li><a href="#why-rubin">Why Rubin, Not Pearl</a></li>
+                        
+                        <li><a href="#tool-calling">Tool Calling</a></li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="#benchmark">Benchmark</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#results">Results</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#learned">Takeaways</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#tech-stack">Technology Stack</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Causal Inference with LLM Agents</h1>
+            
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p><strong>End-to-End Causal Inference with LLM Agents via a Structured Framework</strong>
+Aaron Belikoff (WPI), Matthew Lamborne (UMass Amherst). Advisor: Prof. Raha Moraffah.
+Accepted and published at <a href="https://urtc.mit.edu/">MIT URTC 2025</a>.</p>
+<p><strong>Read the paper:</strong> <a href="https://ieeexplore.ieee.org/abstract/document/11533065">IEEE Xplore</a> · <a href="https://www.researchgate.net/publication/405310505_End-to-End_Causal_Inference_with_LLM_Agents_via_a_Structured_Framework">ResearchGate</a></p>
+<p><strong>Cited by:</strong> <a href="https://www.mdpi.com/2079-9292/15/21/5024">A Scoping Review of Agentic AI: Applications, Emerging Trends, Risks &amp; Future Directions</a> (<em>Electronics</em>, MDPI)</p>
+<p>We built an LLM agent that takes a raw dataset and a causal question ("what is the effect of X on Y?") and answers it end to end: it works out which variables play which roles, picks an estimation method, writes the analysis code, and runs it. This was done in Prof. Moraffah's lab at WPI, where I did undergraduate research on causal reasoning and NLP from 2024 to 2026.</p>
+<h2 id="problem">The Problem</h2>
+<p>Causal inference means estimating how much changing one variable (the <em>treatment</em>) changes another (the <em>outcome</em>). With a randomized experiment that's easy, but often you only have observational data, where something else (a <em>confounder</em>) can affect both treatment and outcome. To get the right answer you have to know the role of each variable and pick an estimation method that fits the data. Numbers alone can't tell you that; you need to understand what the variables mean.</p>
+<p>LLMs know a lot about the world, so in principle they can supply that understanding. In practice, earlier work handed the model the hard parts: benchmarks told it which variables were confounders and which method to use, and the model only had to carry it out. We wanted the model to do the whole thing.</p>
+<h2 id="approach">Our Approach</h2>
+<h3 id="framework">6-Step Framework</h3>
+<p>Instead of letting the model reason freely, the prompt walks it through six steps in order:</p>
+<ol>
+<li>Identify the treatment and outcome.</li>
+<li>Pick an effect-estimation method that suits the data (outcome modeling, propensity scores, instrumental variables, etc.).</li>
+<li>Identify the tools needed for that method.</li>
+<li>Identify the other variables to adjust for (confounders, instruments).</li>
+<li>Identify any data transformations needed (derived columns, filtering).</li>
+<li>Write the code and estimate the effect.</li>
+</ol>
+<p>The prompt also includes templates for 8 causal inference methods and API documentation for <a href="https://github.com/py-why/dowhy">DoWhy</a>'s <code>CausalModel</code>.</p>
+<h3 id="why-rubin">Why Rubin, Not Pearl</h3>
+<p>We first tried a two-stage pipeline built on Pearl causal models: discover the full causal graph (using statistical causal-discovery algorithms with LLM help, including one we built that adds LLM predictions to a score-based search), then estimate the effect from that graph. It didn't work well. Many different graphs can explain the same data, nearly every query had some error in the discovered graph, and those errors carried through to wrong estimates.</p>
+<p>So we switched to Rubin causal models, which don't need the full graph, only each variable's role. Classifying roles turned out to be far more tractable for an LLM.</p>
+<h3 id="tool-calling">Tool Calling</h3>
+<p>We compared three ways for the model to run code:</p>
+<ul>
+<li><strong>Ours (function-based):</strong> The model writes one complete <code>solution()</code> function, we run it, and the return value is the answer. If it errors, the model gets up to 3 attempts to fix it.</li>
+<li><strong>ReAct:</strong> Thought, action, observation loops in a Python terminal.</li>
+<li><strong>Program of Thoughts:</strong> One program in one shot, with no retries.</li>
+</ul>
+<h2 id="benchmark">Benchmark</h2>
+<p>We evaluated on the causal questions in <a href="https://github.com/xxxiaol/QRData">QRData</a>, which has numerical causal inference problems and multiple-choice causal reasoning problems, each with a dataset, a description of the variables, and a question.</p>
+<p>We also made <strong>QRData Instruction-Free</strong>: the same numerical problems, but with the hints about which method to use and which role each variable plays removed. This tests whether the agent can actually do the causal reasoning, rather than just follow instructions.</p>
+<p>All experiments used <strong>Qwen3-14B</strong> (6-bit quantized), served with llama.cpp on WPI's Turing cluster.</p>
+<h2 id="results">Results</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Numerical problems</th>
+<th style="text-align: center;">Our framework</th>
+<th style="text-align: center;">Baseline prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">QRData (with hints)</td>
+<td style="text-align: center;">37.5%</td>
+<td style="text-align: center;">39.1%</td>
+</tr>
+<tr>
+<td style="text-align: left;">QRData Instruction-Free</td>
+<td style="text-align: center;">29.7%</td>
+<td style="text-align: center;">26.6%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Drop when hints are removed</strong></td>
+<td style="text-align: center;"><strong>7.8 points</strong></td>
+<td style="text-align: center;"><strong>12.5 points</strong></td>
+</tr>
+</tbody>
+</table>
+<p>With hints, the baseline is slightly ahead. Without them, our framework loses much less accuracy, which suggests it helps the model reason about causal structure and method choice itself. Overall, Qwen3-14B with our framework outperformed the published GPT-4 + ReAct result on QRData, despite being a much smaller model.</p>
+<!-- TODO: add the headline overall-accuracy comparison once the number is confirmed against the published paper -->
+
+<h2 id="learned">Takeaways</h2>
+<ul>
+<li>How the reasoning is structured mattered more than model size here.</li>
+<li>Classifying variable roles (Rubin) was much more practical for an LLM than recovering a full causal graph (Pearl).</li>
+<li>More context isn't always better: the method documentation helped on numerical problems but slightly hurt on multiple-choice ones, where it was irrelevant.</li>
+</ul>
+<h2 id="tech-stack">Technology Stack</h2>
+<ul>
+<li>Python, DoWhy, pandas</li>
+<li>Qwen3-14B, llama.cpp</li>
+<li>WPI Turing HPC cluster</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

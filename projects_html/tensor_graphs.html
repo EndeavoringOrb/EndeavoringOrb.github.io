@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tensor Graphs</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">Home</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Tensor Graphs</h2>
+        
+        <nav class="project-navigation">
+            <ul>
+                
+                <li>
+                    <a href="#overview">Project Overview</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#how">How It Works</a>
+                    
+                    <ul class="subsection-list">
+                        
+                        <li><a href="#egraphs">Rewriting with E-Graphs</a></li>
+                        
+                        <li><a href="#search">Planning as a Search Problem</a></li>
+                        
+                        <li><a href="#kernels">Kernels & Backends</a></li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="#results">Results</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#process">How I Worked</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#learned">What I Learned</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#tech-stack">Technology Stack</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Tensor Graphs</h1>
+            
+            
+            <div class="project-links">
+                <a href="https://github.com/EndeavoringOrb/tensor_graphs" target="_blank" class="github-link">
+                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
+                    View on GitHub
+                </a>
+            </div>
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p>Tensor Graphs is a compiler and inference engine for ML models, written in C++ with Python bindings. You give it a model as a graph of tensor operations, and it works out how to run that graph on your hardware (CPU, GPU, or both): which kernels to use, which device each operation runs on, what order to run them in, where each tensor lives in memory, and what to cache between runs.</p>
+<p>I worked on it for about 10 months (roughly 1,400 commits). It runs real models: Gemma 3 270M for text generation, EmbeddingGemma for text and audio embeddings, and an image diffusion model.</p>
+<p>I've since stopped working on it. My conclusion is that a <strong>universal</strong> compiler is the hard way to get speed; an engine specialized for one model on one piece of hardware gets there faster. But it was by far the project I learned the most from, about compilers, optimization and performance engineering.</p>
+<h2 id="how">How It Works</h2>
+<h3 id="egraphs">Rewriting with E-Graphs</h3>
+<p>The model graph goes into an <strong>e-graph</strong>, a data structure that stores many equivalent versions of a computation at once. Rewrite rules add alternatives: fusing several small operations into one kernel, running an operation on another device (with the copies that requires), or computing only the part of a tensor that changed since the last run, so results can be cached across calls (for example, during token-by-token text generation).</p>
+<h3 id="search">Planning as a Search Problem</h3>
+<p>Picking the best version out of the e-graph is a combinatorial problem, so I wrote a <strong>constraint-programming search</strong> for it (branch and bound with propagators). For every operation it decides:</p>
+<ul>
+<li>which implementation to use,</li>
+<li>when it runs and on which device (CPU and GPU can run at the same time),</li>
+<li>where its output goes in memory (packing buffers so tensors that aren't alive at the same time can share space),</li>
+<li>and whether to keep the result cached for the next run.</li>
+</ul>
+<p>The objective is the simulated run time. To prune the search, I derived <strong>lower bounds</strong> on the best possible run time, so whole branches can be skipped once they provably can't beat the best plan found so far. Because the search is easy to get subtly wrong, I also built an "oracle" test suite that brute-forces small problems in Python and checks that the C++ search finds an equally good answer.</p>
+<h3 id="kernels">Kernels &amp; Backends</h3>
+<p>About 100 kernels across CPU (C++ with AVX), CUDA and OpenCL, including fused kernels written for specific models (for example Gemma's RMSNorm and rotary embeddings). Kernels are benchmarked on the target hardware so the planner's cost model uses measured times instead of guesses.</p>
+<h2 id="results">Results</h2>
+<p>Gemma 3 270M text generation on an NVIDIA Quadro M4000, as I added optimizations:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Step</th>
+<th style="text-align: right;">Prompt processing (5 tokens)</th>
+<th style="text-align: right;">Generation (per token)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Baseline</td>
+<td style="text-align: right;">518 ms</td>
+<td style="text-align: right;">63.3 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fused RMSNorm kernels</td>
+<td style="text-align: right;">900 ms</td>
+<td style="text-align: right;">50.9 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">Removing copy chains between fused kernels</td>
+<td style="text-align: right;">755 ms</td>
+<td style="text-align: right;">37.1 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fused rotary embedding kernels</td>
+<td style="text-align: right;">746 ms</td>
+<td style="text-align: right;">29.2 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">Compiling exact sequence-length buckets</td>
+<td style="text-align: right;">63 ms</td>
+<td style="text-align: right;">37.1 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>Hugging Face Transformers (CUDA), for reference</em></td>
+<td style="text-align: right;"><em>69 ms</em></td>
+<td style="text-align: right;"><em>37.1 ms</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>llama.cpp (CUDA), for reference</em></td>
+<td style="text-align: right;"><em>24 ms</em></td>
+<td style="text-align: right;"><em>13.8 ms</em></td>
+</tr>
+</tbody>
+</table>
+<p>Kernel work made generation more than 2x faster, and compiling only the sequence lengths actually needed made prompt processing about 12x faster. It ended up on par with Hugging Face Transformers, but still well behind llama.cpp, which is hand-tuned for exactly this kind of workload. That gap is a big part of why I think specialized engines are the better direction.</p>
+<p>I applied the same approach to the planner's own search time: on EmbeddingGemma text, it went from <strong>297 s to 29 s</strong> across about 24 measured changes (keeping the ones that helped, reverting the ones that didn't), with identical output.</p>
+<h2 id="process">How I Worked</h2>
+<p>Every optimization was measured before and after on the same benchmark, and changes that didn't help were reverted, even ones that seemed like they should work. The repo keeps a log of every attempt, failed ones included (<a href="https://github.com/EndeavoringOrb/tensor_graphs/blob/faster-search/KERNEL_PERFORMANCE.md">kernels</a>, <a href="https://github.com/EndeavoringOrb/tensor_graphs/blob/main/SEARCH_PERFORMANCE.md">search</a>).</p>
+<h2 id="learned">What I Learned</h2>
+<ul>
+<li>Compiler techniques: e-graphs and equality saturation, rewrite rules, scheduling, memory planning.</li>
+<li>Constraint programming and branch-and-bound search, including deriving and testing bounds.</li>
+<li>GPU and CPU kernel optimization, and measuring performance carefully.</li>
+<li>That generality has a real cost: a system that handles any graph on any hardware is much harder to make fast than one built for a single case.</li>
+</ul>
+<h2 id="tech-stack">Technology Stack</h2>
+<ul>
+<li>C++, CUDA, OpenCL, AVX intrinsics</li>
+<li>Python (bindings, testing, benchmarking)</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

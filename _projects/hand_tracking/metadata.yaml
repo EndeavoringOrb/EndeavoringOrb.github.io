@@ -1,0 +1,17 @@
+title: "Hand Tracking for Spellcasting"
+github: https://github.com/EndeavoringOrb/AirHandWriter
+sections:
+  - id: "overview"
+    title: "Project Overview"
+  - id: "why"
+    title: "Why Build My Own?"
+  - id: "data"
+    title: "Data Pipeline"
+  - id: "model"
+    title: "Model & Training"
+  - id: "game"
+    title: "Running It in the Game"
+  - id: "status"
+    title: "Where It's At"
+  - id: "tech-stack"
+    title: "Technology Stack"
