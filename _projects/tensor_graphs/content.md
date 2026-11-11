@@ -41,7 +41,7 @@ Gemma 3 270M text generation on an NVIDIA Quadro M4000, as I added optimizations
 | *Hugging Face Transformers (CUDA), for reference* | *69 ms* | *37.1 ms* |
 | *llama.cpp (CUDA), for reference* | *24 ms* | *13.8 ms* |
 
-Kernel work made generation more than 2x faster, and compiling only the sequence lengths actually needed made prompt processing about 12x faster. It ended up on par with Hugging Face Transformers, but still well behind llama.cpp, which is hand-tuned for exactly this kind of workload. That gap is a big part of why I think specialized engines are the better direction.
+Kernel work made generation more than 2x faster, and compiling only the sequence lengths actually needed made prompt processing about 12x faster. It ended up on par with Hugging Face Transformers, but still well behind llama.cpp, which is hand-tuned for exactly this kind of workload.
 
 I applied the same approach to the planner's own search time: on EmbeddingGemma text, it went from **297 s to 29 s** across about 24 measured changes (keeping the ones that helped, reverting the ones that didn't), with identical output.
 
@@ -54,7 +54,6 @@ Every optimization was measured before and after on the same benchmark, and chan
 - Compiler techniques: e-graphs and equality saturation, rewrite rules, scheduling, memory planning.
 - Constraint programming and branch-and-bound search, including deriving and testing bounds.
 - GPU and CPU kernel optimization, and measuring performance carefully.
-- That generality has a real cost: a system that handles any graph on any hardware is much harder to make fast than one built for a single case.
 
 ## Technology Stack {#tech-stack}
 - C++, CUDA, OpenCL, AVX intrinsics

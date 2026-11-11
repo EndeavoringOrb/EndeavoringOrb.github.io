@@ -106,9 +106,9 @@
             "description": "Fingertip tracking from a webcam for a gesture-controlled wizard game: custom data pipeline, CUDA augmentation, and C++ inference."
         },
         {
-            "name": "engine_3d",
-            "title": "3D Software Renderer & Physics Engine",
-            "description": "A 3D engine written from scratch in C++, with a CPU rasterizer, Verlet physics, and simulated cloth."
+            "name": "mage_game",
+            "title": "Mage Game: Engine & Renderer",
+            "description": "The engine for my hand-gesture spellcasting game: a from-scratch C++ software renderer with cascaded shadow maps, cloth and fire."
         },
         {
             "name": "causal_inference",

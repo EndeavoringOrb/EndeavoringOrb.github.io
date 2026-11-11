@@ -157,7 +157,7 @@
 </tr>
 </tbody>
 </table>
-<p>Kernel work made generation more than 2x faster, and compiling only the sequence lengths actually needed made prompt processing about 12x faster. It ended up on par with Hugging Face Transformers, but still well behind llama.cpp, which is hand-tuned for exactly this kind of workload. That gap is a big part of why I think specialized engines are the better direction.</p>
+<p>Kernel work made generation more than 2x faster, and compiling only the sequence lengths actually needed made prompt processing about 12x faster. It ended up on par with Hugging Face Transformers, but still well behind llama.cpp, which is hand-tuned for exactly this kind of workload.</p>
 <p>I applied the same approach to the planner's own search time: on EmbeddingGemma text, it went from <strong>297 s to 29 s</strong> across about 24 measured changes (keeping the ones that helped, reverting the ones that didn't), with identical output.</p>
 <h2 id="process">How I Worked</h2>
 <p>Every optimization was measured before and after on the same benchmark, and changes that didn't help were reverted, even ones that seemed like they should work. The repo keeps a log of every attempt, failed ones included (<a href="https://github.com/EndeavoringOrb/tensor_graphs/blob/faster-search/KERNEL_PERFORMANCE.md">kernels</a>, <a href="https://github.com/EndeavoringOrb/tensor_graphs/blob/main/SEARCH_PERFORMANCE.md">search</a>).</p>
@@ -166,7 +166,6 @@
 <li>Compiler techniques: e-graphs and equality saturation, rewrite rules, scheduling, memory planning.</li>
 <li>Constraint programming and branch-and-bound search, including deriving and testing bounds.</li>
 <li>GPU and CPU kernel optimization, and measuring performance carefully.</li>
-<li>That generality has a real cost: a system that handles any graph on any hardware is much harder to make fast than one built for a single case.</li>
 </ul>
 <h2 id="tech-stack">Technology Stack</h2>
 <ul>

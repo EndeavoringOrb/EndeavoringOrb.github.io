@@ -75,19 +75,12 @@
             <h1>Hand Tracking for Spellcasting</h1>
             
             
-            <div class="project-links">
-                <a href="https://github.com/EndeavoringOrb/AirHandWriter" target="_blank" class="github-link">
-                    <img src="/static/icons/github-mark.svg" alt="GitHub" class="icon">
-                    View on GitHub
-                </a>
-            </div>
-            
             
         </div>
 
         <div class="project-body">
             <h2 id="overview">Project Overview</h2>
-<p>The game I eventually want to make is a wizard dueling game where you cast spells with your hands: a webcam watches your hand, you trace a spell's shape in the air, and the game recognizes it. That requires fast, reliable fingertip tracking that can run inside a C++ game loop.</p>
+<p>The game I eventually want to make is a mage dueling game where you cast spells with your hands: a webcam watches your hand, you trace a spell's shape in the air, and the game recognizes it. That requires fast, reliable fingertip tracking that can run inside a C++ game loop.</p>
 <p>This project is that tracker. It finds the thumb and index fingertips in a webcam frame, so the game can tell where you're pointing and whether you're pinching (pinch = pen down).</p>
 <!-- TODO: add a short clip of the tracker running live, e.g. ![Live tracking](/static/files/hand_tracking/demo.mp4) or a GIF -->
 
@@ -114,7 +107,7 @@
 <li><strong>Hyperparameter sweeps:</strong> A small Flask dashboard to launch runs, compare them, and run Bayesian-optimization sweeps over the hyperparameters.</li>
 </ul>
 <h2 id="game">Running It in the Game</h2>
-<p>To use the model without Python, I export the trained weights to a binary file and run inference with a small <strong>from-scratch C++ implementation</strong> of the network (convolutions, normalization, the ResNet blocks), plus OpenCV for the camera and preprocessing. This lives in the <a href="https://github.com/EndeavoringOrb/mageGame">mage game repo</a>.</p>
+<p>To use the model without Python, I export the trained weights to a binary file and run inference with a small <strong>from-scratch C++ implementation</strong> of the network (convolutions, normalization, the ResNet blocks), plus OpenCV for the camera and preprocessing.</p>
 <h2 id="status">Where It's At</h2>
 <p>The tracker runs live on a webcam. The game itself is early: it has movement and a spell system, but the gesture-to-spell part isn't wired up yet. Building this taught me that most of the effort in an applied ML project is in the data: collecting it, finding the bad labels, and making the dataset varied enough.</p>
 <h2 id="tech-stack">Technology Stack</h2>

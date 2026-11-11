@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mage Game: Engine & Renderer</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">Home</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+<div class="project-container">
+    <div class="project-sidebar">
+        <h2>Mage Game: Engine & Renderer</h2>
+        
+        <nav class="project-navigation">
+            <ul>
+                
+                <li>
+                    <a href="#overview">Project Overview</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#renderer">Software Renderer</a>
+                    
+                    <ul class="subsection-list">
+                        
+                        <li><a href="#pipeline">Pipeline</a></li>
+                        
+                        <li><a href="#shadows">Shadows</a></li>
+                        
+                        <li><a href="#style">Edge Shading & Look</a></li>
+                        
+                        <li><a href="#fire">Fire</a></li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="#physics">Physics</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#gameplay">Gameplay Prototype</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#status">Where It's At</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#tech-stack">Technology Stack</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="/index.html">← Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="project-content">
+        <div class="project-header">
+            <h1>Mage Game: Engine & Renderer</h1>
+            
+            
+            
+        </div>
+
+        <div class="project-body">
+            <h2 id="overview">Project Overview</h2>
+<p>This is the game I eventually want to make: a mage dueling game where you cast spells with your hands. You draw spell symbols in the air in front of a webcam, and the symbols combine into spells. This project is the game and the engine I'm building for it, written from scratch in C++. That includes the renderer: there's no OpenGL or DirectX in the render path, and every pixel is computed on the CPU.</p>
+<video src="/static/files/mage_game/demo.mp4" controls autoplay muted loop playsinline style="max-width: 100%;"></video>
+
+<p><em>The character (cyan) and its cloth cape casting shadows from the sun and from a point light above the fire on the blue cube. The black panel in the top left is a debug view of a shadow map.</em></p>
+<h2 id="renderer">Software Renderer</h2>
+<h3 id="pipeline">Pipeline</h3>
+<p>Each frame goes through these steps:</p>
+<ol>
+<li><strong>Shadow maps:</strong> Render the scene's depth from every light's point of view.</li>
+<li><strong>Geometry:</strong> Transform, clip and rasterize every triangle, writing color, depth, normal and world position for each pixel. Triangles crossing the camera's near plane are <strong>clipped</strong> into one or two smaller triangles, so geometry behind the camera never gets drawn.</li>
+<li><strong>Lighting:</strong> For each pixel, add up the light from every light, checking the shadow maps to see whether the pixel is in shadow.</li>
+<li><strong>Edge shading:</strong> A post-process pass that outlines silhouettes and creases.</li>
+<li><strong>Effects:</strong> Particle fire, drawn on top.</li>
+</ol>
+<p>The scene renders at a low internal resolution (256 pixels tall) and is scaled up to the window, which gives it a chunky, pixel-art look and keeps the CPU cost manageable. The camera is orthographic, looking down at an angle.</p>
+<h3 id="shadows">Shadows</h3>
+<p>Shadows use <strong>shadow mapping</strong>: render depth from the light's point of view, then a pixel is in shadow if something sits closer to the light than it does.</p>
+<ul>
+<li><strong>Directional light (the sun)</strong> uses <strong>cascaded shadow maps</strong>. The camera's view is split into slices by distance, each with its own shadow map, so nearby shadows stay sharp without needing one giant map. The split points blend even and logarithmic spacing, and each cascade gets an orthographic light camera fitted tightly around its slice of the view.</li>
+<li><strong>Point lights</strong> render <strong>six shadow maps</strong>, one for each face of a cube around the light, each with a 90° field of view. To shade a pixel, the renderer picks the face pointing toward that pixel.</li>
+<li>Shadow maps are drawn by the same CPU rasterizer as the main view. A debug mode shows the shadow maps on screen.</li>
+</ul>
+<h3 id="style">Edge Shading &amp; Look</h3>
+<p>To make shapes read clearly at low resolution, a post-process pass compares each pixel's depth and normal with its neighbors'. Where the depth jumps (a silhouette), the pixel is darkened into an outline. Where the normal changes (an edge between two faces), it's brightened into a highlight.</p>
+<h3 id="fire">Fire</h3>
+<p>Fire is a particle effect. Each particle's color comes from a temperature-style ramp, based on real flame colors: dark red, then cherry red, orange, yellow and finally white for the hottest parts.</p>
+<h2 id="physics">Physics</h2>
+<ul>
+<li><strong>Verlet integration</strong> for particles, which makes constraints simple and stable.</li>
+<li><strong>Cloth</strong> made of particles connected by distance constraints, solved over several iterations per frame. Some particles can be pinned, which is how the character's cape attaches to the shoulders.</li>
+<li><strong>Character controller:</strong> WASD movement and a jump with a set height and duration.</li>
+</ul>
+<h2 id="gameplay">Gameplay Prototype</h2>
+<p>Before the 3D renderer, I prototyped the combat in 2D:</p>
+<ul>
+<li>Spells are built from <strong>spell words</strong>: a type, a form (arrow, laser, bomb, wave…) and affinities (fire, water, speed…), with affinities designed to combine into new effects.</li>
+<li>Laser and bomb attacks, a burn damage-over-time effect, health bars, mana, a dash, and circle and rectangle hitboxes.</li>
+<li>The plan is to draw each spell word with your hand: pinch your fingers to draw a symbol on a canvas, then release to cast at that point. The <a href="/projects_html/hand_tracking.html">hand tracking</a> project is the input side of this.</li>
+</ul>
+<h2 id="status">Where It's At</h2>
+<p>The renderer has working lighting, cascaded and point-light shadows, clipping, edge shading, cloth and fire. Water and volumetric fluid rendering are in progress. The 2D combat prototype and the 3D renderer haven't been joined into one game yet.</p>
+<p>This grew out of an earlier, simpler engine with flat lighting and no shadows:</p>
+<video src="/static/files/mage_game/early_engine.mp4" controls muted loop playsinline style="max-width: 100%;"></video>
+
+<p><em>The earlier engine: the character (an icosahedron for now) walking and jumping, with the blue cape simulated as cloth.</em></p>
+<h2 id="tech-stack">Technology Stack</h2>
+<ul>
+<li>C++</li>
+<li>GLM (vector math)</li>
+<li>SFML (window, input, and putting the pixel buffer on screen)</li>
+</ul>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+    });
+</script>
+
+</body>
+
+</html>

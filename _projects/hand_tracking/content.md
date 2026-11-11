@@ -1,6 +1,6 @@
 ## Project Overview {#overview}
 
-The game I eventually want to make is a wizard dueling game where you cast spells with your hands: a webcam watches your hand, you trace a spell's shape in the air, and the game recognizes it. That requires fast, reliable fingertip tracking that can run inside a C++ game loop.
+The game I eventually want to make is a mage dueling game where you cast spells with your hands: a webcam watches your hand, you trace a spell's shape in the air, and the game recognizes it. That requires fast, reliable fingertip tracking that can run inside a C++ game loop.
 
 This project is that tracker. It finds the thumb and index fingertips in a webcam frame, so the game can tell where you're pointing and whether you're pinching (pinch = pen down).
 
@@ -33,7 +33,7 @@ Data is stored in chunked binary files instead of individual image files, which 
 
 ## Running It in the Game {#game}
 
-To use the model without Python, I export the trained weights to a binary file and run inference with a small **from-scratch C++ implementation** of the network (convolutions, normalization, the ResNet blocks), plus OpenCV for the camera and preprocessing. This lives in the [mage game repo](https://github.com/EndeavoringOrb/mageGame).
+To use the model without Python, I export the trained weights to a binary file and run inference with a small **from-scratch C++ implementation** of the network (convolutions, normalization, the ResNet blocks), plus OpenCV for the camera and preprocessing.
 
 ## Where It's At {#status}
 
